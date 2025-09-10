@@ -9,14 +9,14 @@ CREATE TABLE location (
     city VARCHAR(30) NOT NULL,
     state VARCHAR(30) NOT NULL,
     country VARCHAR(30) NOT NULL
-)
+);
 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     dep_name VARCHAR(30) NOT NULL,
     location_id INT,
     FOREIGN KEY (location_id) 
-    REFERENCES location(id) ON DELETE SET NULL
+    REFERENCES location(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE roles (
@@ -25,7 +25,7 @@ CREATE TABLE roles (
     salary DECIMAL(10,2),
     department_id INT,
     FOREIGN KEY (department_id)
-    REFERENCES department(id) ON DELETE SET NULL
+    REFERENCES department(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE employee (
@@ -35,11 +35,11 @@ CREATE TABLE employee (
     role_id INT,
     manager_id INT,
     hire_date DATE,
-    FOREIGN KEY (role_id),
+    FOREIGN KEY (role_id)
     REFERENCES roles(id),
-    FOREIGN KEY (manager_id), 
-    REFERENCES employee(id) ON DELETE SET NULL
-)
+    FOREIGN KEY (manager_id) 
+    REFERENCES employee(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
 
 CREATE TABLE project (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -48,20 +48,20 @@ CREATE TABLE project (
     end_date DATE,
     budget DECIMAL(12,2),
     department_id INT,
-    FOREIGN KEY (department_id), 
-    REFERENCES department(id) ON DELETE SET NULL
-)
+    FOREIGN KEY (department_id)
+    REFERENCES department(id) ON DELETE SET NULL ON UPDATE CASCADE
+);
 
 CREATE TABLE employee_project (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     employee_id INT NOT NULL,
-    project_id DATE NOT NULL,
+    project_id INT NOT NULL,
     role_in_project VARCHAR(50),
     FOREIGN KEY (employee_id) 
     REFERENCES employee(id) ON DELETE CASCADE,
     FOREIGN KEY (project_id) 
     REFERENCES project(id) ON DELETE CASCADE
-)
+);
 
 CREATE TABLE payroll (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -72,4 +72,4 @@ CREATE TABLE payroll (
     net_salary DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (employee_id) 
     REFERENCES employee(id) ON DELETE CASCADE
-)
+);
