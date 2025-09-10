@@ -4,6 +4,35 @@
 ## Description
 This project is a Company Management System built with MySQL as the database foundation.
 
+The database models key aspects of a company, including:
+
+Employees (with roles, managers, payroll, and projects)
+
+Departments and their locations
+
+Projects and employee assignments
+
+Payroll and compensation tracking
+
+The schema enforces referential integrity with foreign keys, cascading rules, and self-references for hierarchical relationships (e.g., employees managed by other employees).
+
+🔮 Future Development
+
+This is the backend foundation for a full-stack application.
+In the next phases, we plan to add a front-end user interface that will allow:
+
+HR staff to add and manage employees, roles, and departments
+
+Project managers to assign employees to projects and track budgets
+
+Employees to view their details and project assignments
+
+Automated payroll tracking and reporting
+
+The front end will be built with React and will interact with this MySQL database through a Node.js/Express API.
+
+Ultimately, the goal is to provide a realistic company management system that simulates how modern businesses organize employees, projects, and finances.
+
 ## Table of Contents
 
 - [Installation](#Installation)
