@@ -12,9 +12,18 @@ SELECT * FROM roles;
 SELECT * FROM project;
 -- Query to retrieve all employee-project assignments
 SELECT * FROM employee_project;
+-- Query to retrieve employees along with their roles and departments
+SELECT e.first_name, e.last_name, r.title AS role, d.dep_name AS department
+FROM employee e
+    JOIN roles r ON e.role_id = r.id
+    JOIN department d ON r.department_id = d.id;
 
 -- Query to retrieve employees with a specific job title
-SELECT * FROM employee WHERE job_title = 'Software Engineer';
+SELECT e.first_name, e.last_name
+FROM employee e
+    JOIN roles r ON e.role_id = r.id
+WHERE
+    r.title = 'Software Engineer';
 -- Query to retrieve employees hired after a specific date
 SELECT * FROM employee WHERE hire_date > '2023-01-01';
 

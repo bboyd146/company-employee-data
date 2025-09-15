@@ -71,7 +71,7 @@ INSERT INTO employee_project(employee_id, project_id, role_in_project) VALUES
 (9, 8, 'Operations Supervisor'),
 (10, 9, 'Legal Consultant');
 
-INSERT INTO payroll(employee_id, pay_date, gross_pay, deductions, net_salary, payment_method) VALUES
+INSERT INTO payroll(employee_id, pay_date, gross_salary, deductions, net_salary, payment_method) VALUES
 (1, '2023-01-31', 6666.67, 666.67, 6000.00, 'Direct Deposit'),
 (2, '2023-01-31', 7500.00, 750.00, 6750.00, 'Check'),
 (3, '2023-01-31', 5833.33, 583.33, 5250.00, 'Direct Deposit'),
