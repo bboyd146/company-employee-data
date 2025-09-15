@@ -14,19 +14,19 @@ SELECT * FROM project;
 SELECT * FROM employee_project;
 
 -- Query to retrieve employees with a specific job title
-SELECT * FROM employees WHERE job_title = 'Software Engineer';
+SELECT * FROM employee WHERE job_title = 'Software Engineer';
 -- Query to retrieve employees hired after a specific date
-SELECT * FROM employees WHERE hire_date > '2023-01-01';
+SELECT * FROM employee WHERE hire_date > '2023-01-01';
 
 -- Query to retrieve employees by department
 SELECT e.first_name, e.last_name, d.name AS department
-FROM employees e
-    JOIN departments d ON e.department_id = d.id
+FROM employee e
+    JOIN department d ON e.department_id = d.id
 WHERE
     d.name = 'Engineering';
 
 -- Query to update an employee's salary
-UPDATE employees SET salary = 95000.00 WHERE id = 1;
+UPDATE employee SET salary = 95000.00 WHERE id = 1;
 
 -- Query to delete an employee by ID
-DELETE FROM employees WHERE id = 3;
+DELETE FROM employee WHERE id = 3;
