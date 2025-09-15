@@ -70,4 +70,16 @@ INSERT INTO employee_project(employee_id, project_id, role_in_project) VALUES
 (8, 7, 'R&D Analyst'),
 (9, 8, 'Operations Supervisor'),
 (10, 9, 'Legal Consultant');
+
+INSERT INTO payroll(employee_id, pay_date, amount, payment_method) VALUES
+(1, '2023-01-31', 6666.67, 'Direct Deposit'),
+(2, '2023-01-31', 7500.00, 'Check'),
+(3, '2023-01-31', 5833.33, 'Direct Deposit'),
+(4, '2023-01-31', 5000.00, 'Check'),
+(5, '2023-01-31', 7083.33, 'Direct Deposit'),
+(6, '2023-01-31', 4583.33, 'Check'),
+(7, '2023-01-31', 4166.67, 'Direct Deposit'),
+(8, '2023-01-31', 7916.67, 'Check'),
+(9, '2023-01-31', 7666.67, 'Direct Deposit'),
+(10, '2023-01-31', 9166.67, 'Check');
 -- End of db/seeds.sql
