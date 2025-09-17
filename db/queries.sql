@@ -35,7 +35,9 @@ WHERE
     d.name = 'Engineering';
 
 -- Query to update an employee's salary
-UPDATE employee SET salary = 95000.00 WHERE id = 1;
+UPDATE roles SET salary = 85000.00 WHERE title = 'Software Engineer';
+-- Query to update an employee's role
+UPDATE employee SET role_id = 2 WHERE id = 1; -- Change role of employee with ID 1 to role ID 2
 
 -- Query to delete an employee by ID
 DELETE FROM employee WHERE id = 3;
