@@ -70,6 +70,7 @@ CREATE TABLE payroll (
     gross_salary DECIMAL(10,2) NOT NULL,
     deductions DECIMAL(10,2),
     net_salary DECIMAL(10,2) NOT NULL,
+    payment_method VARCHAR(30),
     FOREIGN KEY (employee_id) 
     REFERENCES employee(id) ON DELETE CASCADE
 );
