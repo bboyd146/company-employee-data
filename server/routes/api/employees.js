@@ -6,7 +6,7 @@ const router = Router();
 // Get all employees
 router.get('/', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM employees');
+        const [rows] = await db.query('SELECT * FROM employee');
         res.json(rows);
     } catch (err) {
         next(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 // Get employee by ID
 router.get('/:id', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM employees WHERE id = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM employee WHERE id = ?', [req.params.id]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Employee not found' });
         }
@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
     try {
         const { first_name, last_name, role_id, manager_id, hire_date } = req.body;
         const [result] = await db.query(
-            'INSERT INTO employees (first_name, last_name, role_id, manager_id, hire_date) VALUES (?, ?, ?, ?, ?)',
+            'INSERT INTO employee (first_name, last_name, role_id, manager_id, hire_date) VALUES (?, ?, ?, ?, ?)',
             [first_name, last_name, role_id, manager_id, hire_date]
         );
         res.status(201).json({ id: result.insertId, first_name, last_name, role_id, manager_id, hire_date });
@@ -60,7 +60,7 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { first_name, last_name, role_id, manager_id, hire_date } = req.body;
         const [result] = await db.query(
-            'UPDATE employees SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?, hire_date = ? WHERE id = ?',
+            'UPDATE employee SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?, hire_date = ? WHERE id = ?',
             [first_name, last_name, role_id, manager_id, hire_date, req.params.id]
         );
         if (result.affectedRows === 0) {
@@ -75,7 +75,7 @@ router.put('/:id', async (req, res, next) => {
 // Delete an employee
 router.delete('/:id', async (req, res, next) => {
     try {
-        const [result] = await db.query('DELETE FROM employees WHERE id = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM employee WHERE id = ?', [req.params.id]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Employee not found' });
         }
