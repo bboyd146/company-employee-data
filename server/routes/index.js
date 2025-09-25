@@ -1,12 +1,13 @@
-import { Router } from 'express';
-import apiRoutes from './api.js';
+import { Router } from "express";
+import apiRoutes from "./api/index.js"; 
 
 const router = Router();
 
-router.use('/api', apiRoutes);
+router.use("/api", apiRoutes);
 
+// Catch-all for undefined routes
 router.use((req, res) => {
-    res.send("<h1>Wrong Route!</h1>");
+    res.status(404).json({ error: "Route not found" });
 });
 
 export default router;
