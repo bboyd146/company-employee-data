@@ -82,7 +82,7 @@ router.get("/active-projects", async (req, res) => {
 router.get("/department-budgets", async (req, res) => {
     try {
         const [rows] = await db.query(`
-        SELECT d.dep_name, COUNT(p.id) AS num_projects, SUM(p.budget) AS total_budget
+        SELECT d.dep_name, COUNT(p.id) AS project_count, SUM(p.budget) AS total_budget
         FROM department d
         LEFT JOIN project p ON d.id = p.department_id
         GROUP BY d.dep_name
