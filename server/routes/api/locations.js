@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
             'INSERT INTO location (address, city, state, country) VALUES (?, ?, ?, ?)',
             [address, city, state, country]
         );
-        res.status(201).json({ id: result.insertId, city, state, country });
+        res.status(201).json({ id: result.insertId, address, city, state, country });
     } catch (err) {
         next(err);
     }
