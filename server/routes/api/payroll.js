@@ -29,12 +29,12 @@ router.get('/:id', async (req, res, next) => {
 // add a new payroll record
 router.post('/', async (req, res, next) => {
     try {
-        const { employee_id, amount, pay_date, payment_method } = req.body;
+        const { employee_id, pay_date, gross_salary, deductions, net_salary, payment_method } = req.body;
         const [result] = await db.query(
-            'INSERT INTO payroll (employee_id, amount, pay_date, payment_method) VALUES (?, ?, ?, ?)',
-            [employee_id, amount, pay_date, payment_method]
+            'INSERT INTO payroll (employee_id, pay_date, gross_salary, deductions, net_salary, payment_method) VALUES (?, ?, ?, ?, ?, ?)',
+            [employee_id, pay_date, gross_salary, deductions, net_salary, payment_method]
         );
-        res.status(201).json({ id: result.insertId, employee_id, amount, pay_date, payment_method });
+        res.status(201).json({ id: result.insertId, employee_id, pay_date, gross_salary, deductions, net_salary, payment_method });
     } catch (err) {
         next(err);
     }
@@ -43,15 +43,15 @@ router.post('/', async (req, res, next) => {
 // update a payroll record
 router.put('/:id', async (req, res, next) => {
     try {
-        const { employee_id, amount, pay_date, payment_method } = req.body;
+        const { employee_id, pay_date, gross_salary, deductions, net_salary, payment_method } = req.body;
         const [result] = await db.query(
-            'UPDATE payroll SET employee_id = ?, amount = ?, pay_date = ?, payment_method = ? WHERE id = ?',
-            [employee_id, amount, pay_date, payment_method, req.params.id]
+            'UPDATE payroll SET employee_id = ?, pay_date = ?, gross_salary = ?, deductions = ?, net_salary = ?, payment_method = ? WHERE id = ?',
+            [employee_id, pay_date, gross_salary, deductions, net_salary, payment_method, req.params.id]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Payroll record not found' });
         }
-        res.json({ id: req.params.id, employee_id, amount, pay_date, payment_method });
+        res.json({ id: req.params.id, employee_id, pay_date, gross_salary, deductions, net_salary, payment_method });
     } catch (err) {
         next(err);
     }
