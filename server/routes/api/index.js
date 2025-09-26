@@ -6,6 +6,7 @@ import locationsRouter from "./locations.js";
 import projectsRouter from "./projects.js";
 import employeeProjectsRouter from "./employeeProjects.js";
 import payrollRouter from "./payroll.js";
+import reportsRouter from "./reports.js";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/locations", locationsRouter);
 router.use("/projects", projectsRouter);
 router.use("/employee-projects", employeeProjectsRouter);
 router.use("/payroll", payrollRouter);
+router.use("/reports", reportsRouter);
 
 export default router;
