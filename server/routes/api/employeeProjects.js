@@ -29,12 +29,12 @@ router.get('/:id', async (req, res, next) => {
 //add a new employee project
 router.post('/', async (req, res, next) => {
     try {
-        const { employee_id, project_id } = req.body;
+        const { employee_id, project_id, role_in_project } = req.body;
         const [result] = await db.query(
-            'INSERT INTO employee_project (employee_id, project_id) VALUES (?, ?)',
-            [employee_id, project_id]
+            'INSERT INTO employee_project (employee_id, project_id, role_in_project) VALUES (?, ?, ?)',
+            [employee_id, project_id, role_in_project]
         );
-        res.status(201).json({ id: result.insertId, employee_id, project_id });
+        res.status(201).json({ id: result.insertId, employee_id, project_id, role_in_project });
     } catch (err) {
         next(err);
     }
@@ -51,7 +51,7 @@ router.put('/:id', async (req, res, next) => {
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Employee Project not found' });
         }
-        res.json({ id: req.params.id, employee_id, project_id });
+        res.json({ id: req.params.id, employee_id, project_id, role_in_project });
     } catch (err) {
         next(err);
     }
