@@ -1,0 +1,26 @@
+{
+  "name": "company-employee-data",
+  "version": "1.0.0",
+  "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix frontend\"",
+    "install-all": "npm install --prefix server && npm install --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bboyd146/company-employee-data.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bboyd146/company-employee-data/issues"
+  },
+  "homepage": "https://github.com/bboyd146/company-employee-data#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
