@@ -1,6 +1,6 @@
 import React from 'react';
 
-function DepartmentsPage() {
+function Departments() {
   return (
     <div>
       <h2>Departments</h2>
@@ -9,4 +9,4 @@ function DepartmentsPage() {
   );
 }
 
-export default DepartmentsPage;
+export default Departments;

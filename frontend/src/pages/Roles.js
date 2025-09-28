@@ -1,6 +1,6 @@
 import React from 'react';
 
-function RolesPage() {
+function Roles() {
   return (
     <div>
       <h2>Roles</h2>
@@ -9,4 +9,4 @@ function RolesPage() {
   );
 }
 
-export default RolesPage;
+export default Roles;

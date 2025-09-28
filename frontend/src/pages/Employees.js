@@ -1,6 +1,6 @@
 import React from 'react';
 
-function EmployeesPage() {
+function Employees() {
   return (
     <div>
       <h2>Employees</h2>
@@ -9,4 +9,4 @@ function EmployeesPage() {
   );
 }
 
-export default EmployeesPage;
+export default Employees;
