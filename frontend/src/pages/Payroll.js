@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PayrollPage() {
+function Payroll() {
   return (
     <div>
       <h2>Payroll</h2>
@@ -9,4 +9,4 @@ function PayrollPage() {
   );
 }
 
-export default PayrollPage;
+export default Payroll;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function HomePage() {
+function Dashboard() {
   return (
     <div className="page">
       <h2>Place Holder Info, idk what to put here</h2>
@@ -9,4 +9,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default Dashboard;
