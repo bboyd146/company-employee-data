@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/employee-overview", async (req, res) => {
     try {
         const [rows] = await db.query(`
-        SELECT e.id, e.first_name, e.last_name, r.title AS role, d.dep_name AS department, 
+        SELECT e.id, e.first_name, e.last_name, r.title AS role, r.salary, d.dep_name AS department, 
             l.city AS location, p.project_name
         FROM employee e
         JOIN roles r ON e.role_id = r.id
@@ -174,5 +174,6 @@ router.get("/payroll-by-method", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 export default router;

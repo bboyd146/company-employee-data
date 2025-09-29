@@ -26,20 +26,6 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
-// Get employees with roles + departments
-router.get("/with-roles", async (req, res) => {
-    try {
-        const [rows] = await db.query(`
-    SELECT e.first_name, e.last_name, r.title AS role, d.dep_name AS department
-    FROM employee e
-    JOIN roles r ON e.role_id = r.id
-    JOIN department d ON r.department_id = d.id
-    `);
-        res.json(rows);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
 
 // Add a new employee
 router.post('/', async (req, res, next) => {
