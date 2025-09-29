@@ -1,32 +1,40 @@
-import React from "react";
 
-function Table({ columns, data }) {
+export default function Table({ columns, data, onEdit, onDelete }) {
   return (
-    <table className="data-table">
+    <table>
       <thead>
         <tr>
           {columns.map((col) => (
-            <th key={col}>{col}</th>
+            <th key={col.key}>{col.label}</th>
           ))}
+          {(onEdit || onDelete) && <th>Actions</th>}
         </tr>
       </thead>
       <tbody>
         {data.length > 0 ? (
-          data.map((row, idx) => (
-            <tr key={idx}>
+          data.map((row) => (
+            <tr key={row.id}>
               {columns.map((col) => (
-                <td key={col}>{row[col]}</td>
+                <td key={col.key}>{row[col.key]}</td>
               ))}
+              {(onEdit || onDelete) && (
+                <td>
+                  {onEdit && (
+                    <button onClick={() => onEdit(row)}>Edit</button>
+                  )}
+                  {onDelete && (
+                    <button onClick={() => onDelete(row.id)}>Delete</button>
+                  )}
+                </td>
+              )}
             </tr>
           ))
         ) : (
           <tr>
-            <td colSpan={columns.length}>No data available</td>
+            <td colSpan={columns.length + 1}>No records found</td>
           </tr>
         )}
       </tbody>
     </table>
   );
 }
-
-export default Table;
