@@ -1,55 +1,100 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const reportsList = [
+  { key: "employee-overview", label: "Employee Overview" },
+  { key: "salary-by-department", label: "Salary by Department" },
+  { key: "employee-managers", label: "Employees & Managers" },
+  { key: "active-projects", label: "Active Projects" },
+  { key: "department-budgets", label: "Department Budgets" },
+  { key: "payroll-history", label: "Payroll History" },
+  { key: "employees-multiple-projects", label: "Employees w/ Multiple Projects" },
+  { key: "employees-by-location", label: "Employees by Location" },
+  { key: "projects-over-budget", label: "Projects Over Budget" },
+  { key: "payroll-by-method", label: "Payroll by Method" },
+];
+
 export default function Dashboard() {
-  const [employees, setEmployees] = useState([]);
+  const [selectedReport, setSelectedReport] = useState("employee-overview");
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchEmployeeOverview() {
+    async function fetchReport() {
+      setLoading(true);
       try {
-        const res = await axios.get("http://localhost:5001/api/reports/employee-overview");
-        setEmployees(res.data);
+        const res = await axios.get(
+          `http://localhost:5001/api/reports/${selectedReport}`
+        );
+        setData(res.data);
       } catch (err) {
-        console.error("Error fetching employee overview:", err);
+        console.error("Error fetching report:", err);
       } finally {
         setLoading(false);
       }
     }
-    fetchEmployeeOverview();
-  }, []);
+    fetchReport();
+  }, [selectedReport]);
 
-  if (loading) return <p>Loading employee overview...</p>;
+  if (loading) return <p>Loading {selectedReport}...</p>;
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Employee Overview</h1>
-      <table border="1" cellPadding="8" style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>First</th>
-            <th>Last</th>
-            <th>Role</th>
-            <th>Department</th>
-            <th>Location</th>
-            <th>Project</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.map((emp) => (
-            <tr key={emp.id}>
-              <td>{emp.id}</td>
-              <td>{emp.first_name}</td>
-              <td>{emp.last_name}</td>
-              <td>{emp.role}</td>
-              <td>{emp.department}</td>
-              <td>{emp.location}</td>
-              <td>{emp.project_name || "—"}</td>
-            </tr>
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      {/* Reports Menu */}
+      <div style={{ width: "250px", borderRight: "1px solid #ddd", padding: "1rem" }}>
+        <h3>Reports</h3>
+        <ul style={{ listStyle: "none", padding: 0 }}>
+          {reportsList.map((report) => (
+            <li key={report.key} style={{ margin: "0.5rem 0" }}>
+              <button
+                style={{
+                  background: report.key === selectedReport ? "#007bff" : "transparent",
+                  color: report.key === selectedReport ? "#fff" : "#000",
+                  border: "none",
+                  padding: "0.5rem 1rem",
+                  width: "100%",
+                  textAlign: "left",
+                  cursor: "pointer",
+                }}
+                onClick={() => setSelectedReport(report.key)}
+              >
+                {report.label}
+              </button>
+            </li>
           ))}
-        </tbody>
-      </table>
+        </ul>
+      </div>
+
+      {/* Report Data */}
+      <div style={{ flex: 1, padding: "2rem" }}>
+        <h1>{reportsList.find((r) => r.key === selectedReport)?.label}</h1>
+        {data.length > 0 ? (
+          <table
+            border="1"
+            cellPadding="8"
+            style={{ width: "100%", borderCollapse: "collapse" }}
+          >
+            <thead>
+              <tr>
+                {Object.keys(data[0]).map((col) => (
+                  <th key={col}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row, i) => (
+                <tr key={i}>
+                  {Object.values(row).map((val, j) => (
+                    <td key={j}>{val !== null ? val.toString() : "—"}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No data available</p>
+        )}
+      </div>
     </div>
   );
 }
