@@ -6,6 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run dev --prefix server\" \"npm start --prefix frontend\"",
+    "frontend":"npm start --prefix frontend",
+    "backend":"npm run dev --prefix server",
     "install-all": "npm install --prefix server && npm install --prefix frontend"
   },
   "repository": {
