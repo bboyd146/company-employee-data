@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { formatCurrency, formatDate } from "../utils/FormatFunctions";
 
 const reportsList = [
   { key: "employee-overview", label: "Employee Overview" },
@@ -84,9 +85,29 @@ export default function Dashboard() {
             <tbody>
               {data.map((row, i) => (
                 <tr key={i}>
-                  {Object.values(row).map((val, j) => (
-                    <td key={j}>{val !== null ? val.toString() : "—"}</td>
-                  ))}
+                  {Object.entries(row).map(([col, val], j) => {
+                    let displayValue = val;
+
+                  // format dates
+                  if (col.toLowerCase().includes("date")) {
+                    displayValue = formatDate(val);
+                    }
+
+                  // format salaries, budgets, payroll
+                  if (
+                  col.toLowerCase().includes("salary") ||
+                  col.toLowerCase().includes("budget") ||
+                  col.toLowerCase().includes("paid")
+                  ) {
+                    displayValue = formatCurrency(val);
+                    }
+
+                  return (
+                  <td key={j}>
+                    {displayValue !== null ? displayValue.toString() : "—"}
+                  </td>
+                  );
+})}
                 </tr>
               ))}
             </tbody>
