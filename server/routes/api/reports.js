@@ -10,15 +10,16 @@ const router = express.Router();
 router.get("/employee-overview", async (req, res) => {
     try {
         const [rows] = await db.query(`
-        SELECT e.id, e.first_name, e.last_name, r.title AS role, r.salary, d.dep_name AS department, 
-            l.city AS location, p.project_name
+        SELECT e.id, e.first_name, e.last_name, r.title AS role, r.salary, d.dep_name AS department, l.city AS location, 
+        GROUP_CONCAT(DISTINCT p.project_name ORDER BY p.project_name SEPARATOR ', ') AS projects
         FROM employee e
         JOIN roles r ON e.role_id = r.id
         JOIN department d ON r.department_id = d.id
         JOIN location l ON d.location_id = l.id
         LEFT JOIN employee_project ep ON e.id = ep.employee_id
         LEFT JOIN project p ON ep.project_id = p.id
-        ORDER BY e.last_name, e.first_name
+        GROUP BY e.id, e.first_name, e.last_name, r.title, r.salary, d.dep_name, l.city
+        ORDER BY e.last_name, e.first_name;
     `);
         res.json(rows);
     } catch (err) {
@@ -64,10 +65,15 @@ router.get("/employee-managers", async (req, res) => {
 router.get("/active-projects", async (req, res) => {
     try {
         const [rows] = await db.query(`
-        SELECT p.project_name, e.first_name, e.last_name, ep.role_in_project
+        SELECT 
+        p.id AS project_id,
+        p.project_name, 
+        e.first_name, 
+        e.last_name, 
+        ep.role_in_project
         FROM project p
-        JOIN employee_project ep ON p.id = ep.project_id
-        JOIN employee e ON ep.employee_id = e.id
+        LEFT JOIN employee_project ep ON p.id = ep.project_id
+        LEFT JOIN employee e ON ep.employee_id = e.id
         WHERE p.end_date IS NULL OR p.end_date > CURDATE()
         ORDER BY p.project_name, e.last_name
     `);
@@ -76,6 +82,7 @@ router.get("/active-projects", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 
 //Department Projects with Budget Totals

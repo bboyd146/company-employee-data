@@ -8,7 +8,6 @@ import Roles from "../pages/Roles";
 import Locations from "../pages/Locations";
 import Payroll from "../pages/Payroll";
 import EmployeeProjects from "../pages/EmployeeProjects";
-import "../App.css";
 
 const Content = () => {
   const routes = [
@@ -23,9 +22,9 @@ const Content = () => {
   ];
 
   return (
-    <main className="App-content">
+    <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
       <Routes>
-        {routes.map(route => (
+        {routes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Routes>

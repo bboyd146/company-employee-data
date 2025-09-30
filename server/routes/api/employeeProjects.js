@@ -45,7 +45,7 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { employee_id, project_id, role_in_project } = req.body;
         const [result] = await db.query(
-            'UPDATE employee_project SET employee_id = ?, project_id = ?, role_in_project = ?, WHERE id = ?',
+            'UPDATE employee_project SET employee_id = ?, project_id = ?, role_in_project = ? WHERE id = ?',
             [employee_id, project_id, role_in_project, req.params.id]
         );
         if (result.affectedRows === 0) {
