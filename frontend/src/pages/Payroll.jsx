@@ -1,9 +1,10 @@
-import {React, useEffect, useState} from 'react';
-import axios from 'axios';
-import Form from '../components/Form';
-import { formatDate, formatCurrency } from '../utils/FormatFunctions';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Form from "../components/Form";
+import { formatDate, formatCurrency } from "../utils/FormatFunctions";
+import { Plus, Edit2, Trash2 } from "lucide-react";
 
-export default function Payroll() {
+export default function PayrollPage() {
   const [payrolls, setPayrolls] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -47,89 +48,120 @@ export default function Payroll() {
     }
   };
 
-  if (loading) return <p>Loading payroll data...</p>;
-
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Sidebar Menu */}
-      <div style={{ width: "250px", borderRight: "1px solid #ddd", padding: "1rem" }}>
-        <h3>Payroll</h3>
-        <button
-          style={{
-            background: "#28a745",
-            color: "#fff",
-            border: "none",
-            padding: "0.5rem 1rem",
-            cursor: "pointer",
-            marginBottom: "1rem",
-          }}
-          onClick={handleAdd}
-        >
-          + Add Payroll
-        </button>
-        </div>
+    <div className="flex h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col">
+        <main className="flex-1 overflow-y-auto p-6">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">Payroll</h1>
 
-        {/* Main Content Area */}
-        <div style={{ flex: 1, padding: "2rem" }}>
-          <h1>Payroll</h1>
-
-          {showForm ? (
-            <Form
-              entity="payroll"
-              apiUrl={apiUrl}
-              fields={[
-                { name: "employee_id", label: "Employee ID", type: "number" },
-                { name: "salary", label: "Salary", type: "number" },
-                { name: "bonus", label: "Bonus", type: "number" },
-                { name: "deductions", label: "Deductions", type: "number" },
-                { name: "pay_date", label: "Pay Date", type: "date" },
-              ]}
-              initialData={editingPayroll}
-              onSuccess={() => {
-                fetchPayrolls();
-                setShowForm(false);
-              }}
-              onCancel={() => setShowForm(false)}
-            />
+          {loading ? (
+            <div className="flex items-center justify-center h-64 animate-pulse">
+              <p className="text-gray-500 text-lg">Loading payroll data...</p>
+            </div>
+          ) : showForm ? (
+            <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+              <Form
+                entity="Payroll"
+                apiUrl={apiUrl}
+                fields={[
+                  { name: "employee_id", label: "Employee ID", type: "number" },
+                  { name: "salary", label: "Salary", type: "number" },
+                  { name: "bonus", label: "Bonus", type: "number" },
+                  { name: "deductions", label: "Deductions", type: "number" },
+                  { name: "pay_date", label: "Pay Date", type: "date" },
+                ]}
+                initialData={editingPayroll}
+                onSuccess={() => {
+                  fetchPayrolls();
+                  setShowForm(false);
+                }}
+                onCancel={() => setShowForm(false)}
+              />
+            </div>
           ) : payrolls.length > 0 ? (
-            <table border="1" cellPadding="10" cellSpacing="0" style={{ width: "100%", borderCollapse: "collapse" }}>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Employee ID</th>
-                  <th>Pay Date</th>
-                  <th>Gross Salary</th>
-                  <th>Deductions</th>
-                  <th>Net Salary</th>
-                  <th>Payment Method</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {payrolls.map((pay) => (
-                  <tr key={pay.id}>
-                    <td>{pay.id}</td>
-                    <td>{pay.employee_id}</td>
-                    <td>{formatDate(pay.pay_date)}</td>
-                    <td>{formatCurrency(pay.gross_salary)}</td>
-                    <td>{formatCurrency(pay.deductions)}</td>
-                    <td>{formatCurrency(pay.net_salary)}</td>
-                    <td>{pay.payment_method}</td>
-                    <td>
-                      <button onClick={() => handleEdit(pay)}>Edit</button>
-                      <button onClick={() => handleDelete(pay.id)} style={{ marginLeft: "0.5rem", color: "#fff", background: "red" }}>
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="space-y-4">
+              <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200 bg-white">
+                <table className="w-full text-sm text-left border-collapse">
+                  <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+                    <tr>
+                      <th className="px-4 py-3 border-b border-gray-200">ID</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Employee ID</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Pay Date</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Gross Salary</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Deductions</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Net Salary</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Payment Method</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {payrolls.map((pay) => (
+                      <tr
+                        key={pay.id}
+                        className="hover:bg-blue-50 transition-colors duration-150"
+                      >
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {pay.id}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {pay.employee_id}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {formatDate(pay.pay_date)}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {formatCurrency(pay.gross_salary)}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {formatCurrency(pay.deductions)}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {formatCurrency(pay.net_salary)}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {pay.payment_method}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800 flex gap-2">
+                          <button
+                            onClick={() => handleEdit(pay)}
+                            className="p-1.5 rounded-lg bg-yellow-100 text-yellow-700 hover:bg-yellow-200 transition"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(pay.id)}
+                            className="p-1.5 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Add Payroll button below table */}
+              <button
+                onClick={handleAdd}
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+              >
+                <Plus size={18} /> Add Payroll
+              </button>
+            </div>
           ) : (
-            <p>No payroll records found.</p>
+            <div className="space-y-4">
+              <p className="text-gray-500">No payroll records found.</p>
+              <button
+                onClick={handleAdd}
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+              >
+                <Plus size={18} /> Add Payroll
+              </button>
+            </div>
           )}
-        </div>  
+        </main>
+      </div>
     </div>
   );
 }
-

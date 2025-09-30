@@ -1,14 +1,15 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Form from "../components/Form";
 import { formatDate } from "../utils/FormatFunctions";
+import { Menu, Plus, Edit2, Trash2 } from "lucide-react";
 
 export default function EmployeesPage() {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const apiUrl = "http://localhost:5002/api/employees";
 
@@ -48,97 +49,108 @@ export default function EmployeesPage() {
     }
   };
 
-  if (loading) return <p>Loading employees...</p>;
-
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Sidebar Menu */}
-      <div style={{ width: "250px", borderRight: "1px solid #ddd", padding: "1rem" }}>
-        <h3>Employees</h3>
-        <button
-          style={{
-            background: "#28a745",
-            color: "#fff",
-            border: "none",
-            padding: "0.5rem 1rem",
-            width: "100%",
-            marginBottom: "1rem",
-            cursor: "pointer",
-          }}
-          onClick={handleAdd}
-        >
-          + Add Employee
-        </button>
-      </div>
-
+    <div className="flex h-screen bg-gray-100">
       {/* Main Content */}
-      <div style={{ flex: 1, padding: "2rem" }}>
-        <h1>Employees</h1>
+      <div className="flex-1 flex flex-col">
+        {/* Content */}
+        <main className="flex-1 overflow-y-auto p-6">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">Employees</h1>
 
-        {showForm ? (
-          <Form
-            entity="Employee"
-            apiUrl={apiUrl}
-            fields={[
-              { name: "first_name", label: "First Name", type: "text", required: true },
-              { name: "last_name", label: "Last Name", type: "text", required: true },
-              { name: "role_id", label: "Role ID", type: "number", required: true },
-              { name: "manager_id", label: "Manager ID", type: "number", required: false },
-              { name: "hire_date", label: "Hire Date", type: "date", required: true },
-            ]}
-            initialData={editingEmployee}
-            onSuccess={() => {
-              fetchEmployees();
-              setShowForm(false);
-            }}
-            onCancel={() => setShowForm(false)}
-          />
-        ) : employees.length > 0 ? (
-          <table border="1" cellPadding="8" style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>First</th>
-                <th>Last</th>
-                <th>Role</th>
-                <th>Manager</th>
-                <th>Hire Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {employees.map((emp) => (
-                <tr key={emp.id}>
-                  <td>{emp.id}</td>
-                  <td>{emp.first_name}</td>
-                  <td>{emp.last_name}</td>
-                  <td>{emp.role_id}</td>
-                  <td>{emp.manager_id || "—"}</td>
-                  <td>{formatDate(emp.hire_date)}</td>
-                  <td>
-                    <button
-                      style={{ marginRight: "0.5rem" }}
-                      onClick={() => handleEdit(emp)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      style={{ background: "red", color: "#fff" }}
-                      onClick={() => handleDelete(emp.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No employees found</p>
-        )}
+          {loading ? (
+            <div className="flex items-center justify-center h-64 animate-pulse">
+              <p className="text-gray-500 text-lg">Loading employees...</p>
+            </div>
+          ) : showForm ? (
+            <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+              <Form
+                entity="Employee"
+                apiUrl={apiUrl}
+                fields={[
+                  { name: "first_name", label: "First Name", type: "text", required: true },
+                  { name: "last_name", label: "Last Name", type: "text", required: true },
+                  { name: "role_id", label: "Role ID", type: "number", required: true },
+                  { name: "manager_id", label: "Manager ID", type: "number", required: false },
+                  { name: "hire_date", label: "Hire Date", type: "date", required: true },
+                ]}
+                initialData={editingEmployee}
+                onSuccess={() => {
+                  fetchEmployees();
+                  setShowForm(false);
+                }}
+                onCancel={() => setShowForm(false)}
+              />
+            </div>
+          ) : employees.length > 0 ? (
+            <div className="space-y-4">
+              <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200 bg-white">
+                <table className="w-full text-sm text-left border-collapse">
+                  <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+                    <tr>
+                      <th className="px-4 py-3 border-b border-gray-200">ID</th>
+                      <th className="px-4 py-3 border-b border-gray-200">First</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Last</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Role</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Manager</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Hire Date</th>
+                      <th className="px-4 py-3 border-b border-gray-200">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {employees.map((emp) => (
+                      <tr
+                        key={emp.id}
+                        className="hover:bg-blue-50 transition-colors duration-150"
+                      >
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">{emp.id}</td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">{emp.first_name}</td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">{emp.last_name}</td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">{emp.role_id}</td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">{emp.manager_id || "—"}</td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {formatDate(emp.hire_date)}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800 flex gap-2">
+                          <button
+                            onClick={() => handleEdit(emp)}
+                            className="p-1.5 rounded-lg bg-yellow-100 text-yellow-700 hover:bg-yellow-200 transition"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(emp.id)}
+                            className="p-1.5 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Add Employee button below table */}
+              <button
+                onClick={handleAdd}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+              >
+                <Plus size={18} /> Add Employee
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <p className="text-gray-500">No employees found.</p>
+              <button
+                onClick={handleAdd}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+              >
+                <Plus size={18} /> Add Employee
+              </button>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
 }
-
-

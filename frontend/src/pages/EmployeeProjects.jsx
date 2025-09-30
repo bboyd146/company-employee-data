@@ -1,8 +1,8 @@
-import { React, useState, useEffect } from 'react';
-import axios from 'axios';
-import Form from '../components/Form';
-import { formatDate } from '../utils/FormatFunctions';
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Form from "../components/Form";
+import { formatDate } from "../utils/FormatFunctions";
+import { Plus, Edit2, Trash2 } from "lucide-react";
 
 export default function EmployeeProjects() {
   const [employeeProjects, setEmployeeProjects] = useState([]);
@@ -48,78 +48,119 @@ export default function EmployeeProjects() {
     }
   };
 
-  if (loading) return <p>Loading employee projects...</p>;
-
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Sidebar Menu */}
-      <div style={{ width: "250px", borderRight: "1px solid #ddd", padding: "1rem" }}>
-        <h3>Employee Projects</h3>
-        <button
-          style={{
-            background: "#28a745",
-            color: "#fff",
-            border: "none",
-            padding: "0.5rem 1rem",
-            cursor: "pointer",
-            marginBottom: "1rem"
-          }}
-          onClick={handleAdd}
-        >
-          + Add Assignment
-        </button>
-      </div>
-      {/* Main Content */}
-      <div style={{ flex: 1, padding: "1rem" }}>
-        <h2>Employee Projects</h2>
-        {showForm ? (
-          <Form
-            entity="employee-project"
-            apiUrl={apiUrl}
-            fields={[
-              { name: "employee_id", label: "Employee ID", type: "number" },
-              { name: "project_id", label: "Project ID", type: "number" },
-              { name: "role", label: "Role", type: "text" },
-              { name: "assigned_date", label: "Assigned Date", type: "date" }
-            ]}
-            initialData={editingEmployeeProject}
-            onSuccess={() => {
-              setShowForm(false);
-              fetchEmployeeProjects();
-            }}
-            onCancel={() => setShowForm(false)}
-          />
-        ) : employeeProjects.length > 0 ? (
-          <table border="1" cellPadding="8" style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Employee ID</th>
-                <th>Project ID</th>
-                <th>Role</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {employeeProjects.map((empProj) => (
-                <tr key={empProj.id}>
-                  <td>{empProj.id}</td>
-                  <td>{empProj.employee_id}</td>
-                  <td>{empProj.project_id}</td>
-                  <td>{empProj.role_in_project}</td>
-                  <td>
-                    <button onClick={() => handleEdit(empProj)}>Edit</button>
-                    <button onClick={() => handleDelete(empProj.id)} style={{ marginLeft: '0.5rem', color: '#fff', background: 'red' }}>Delete</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No employee project assignments found.</p>
-        )}
+    <div className="flex h-screen bg-gray-100">
+      <div className="flex-1 flex flex-col">
+        <main className="flex-1 overflow-y-auto p-6">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">
+            Employee Projects
+          </h1>
+
+          {loading ? (
+            <div className="flex items-center justify-center h-64 animate-pulse">
+              <p className="text-gray-500 text-lg">
+                Loading employee project assignments...
+              </p>
+            </div>
+          ) : showForm ? (
+            <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+              <Form
+                entity="employee-project"
+                apiUrl={apiUrl}
+                fields={[
+                  { name: "employee_id", label: "Employee ID", type: "number" },
+                  { name: "project_id", label: "Project ID", type: "number" },
+                  { name: "role", label: "Role", type: "text" },
+                  { name: "assigned_date", label: "Assigned Date", type: "date" },
+                ]}
+                initialData={editingEmployeeProject}
+                onSuccess={() => {
+                  setShowForm(false);
+                  fetchEmployeeProjects();
+                }}
+                onCancel={() => setShowForm(false)}
+              />
+            </div>
+          ) : employeeProjects.length > 0 ? (
+            <div className="space-y-4">
+              <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200 bg-white">
+                <table className="w-full text-sm text-left border-collapse">
+                  <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+                    <tr>
+                      <th className="px-4 py-3 border-b border-gray-200">ID</th>
+                      <th className="px-4 py-3 border-b border-gray-200">
+                        Employee ID
+                      </th>
+                      <th className="px-4 py-3 border-b border-gray-200">
+                        Project ID
+                      </th>
+                      <th className="px-4 py-3 border-b border-gray-200">
+                        Role
+                      </th>
+                      <th className="px-4 py-3 border-b border-gray-200">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {employeeProjects.map((empProj) => (
+                      <tr
+                        key={empProj.id}
+                        className="hover:bg-blue-50 transition-colors duration-150"
+                      >
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {empProj.id}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {empProj.employee_id}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {empProj.project_id}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                          {empProj.role_in_project || empProj.role}
+                        </td>
+                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800 flex gap-2">
+                          <button
+                            onClick={() => handleEdit(empProj)}
+                            className="p-1.5 rounded-lg bg-yellow-100 text-yellow-700 hover:bg-yellow-200 transition"
+                          >
+                            <Edit2 size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(empProj.id)}
+                            className="p-1.5 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Add button at bottom */}
+              <button
+                onClick={handleAdd}
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+              >
+                <Plus size={18} /> Add Assignment
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <p className="text-gray-500">No employee project assignments found.</p>
+              <button
+                onClick={handleAdd}
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+              >
+                <Plus size={18} /> Add Assignment
+              </button>
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
 }
-

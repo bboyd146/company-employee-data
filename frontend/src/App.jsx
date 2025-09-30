@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import Navbar from "./components/Navbar";  
+import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Content from "./components/Content";
-import "./App.css";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
     <Router>
-      <div className="App">
+      <div className="flex flex-col h-screen">
+        {/* Top Navbar */}
         <Navbar toggleMenu={toggleMenu} />
 
-        <div className="App-body">
+        {/* Body Layout */}
+        <div className="flex flex-1">
+          {/* Sidebar */}
           <Sidebar menuOpen={menuOpen} toggleMenu={toggleMenu} />
+
+          {/* Main Content */}
           <Content />
         </div>
       </div>
@@ -25,4 +28,3 @@ function App() {
 }
 
 export default App;
-

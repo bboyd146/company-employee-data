@@ -73,18 +73,6 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Top Navbar */}
-        <header className="flex items-center justify-between bg-blue-600 text-white px-4 py-3 shadow-md">
-          <button
-            className="md:hidden"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            <Menu size={24} />
-          </button>
-          <h1 className="text-lg font-semibold">Company Database Portal</h1>
-          <div></div>
-        </header>
-
         {/* Report Content */}
         <main className="flex-1 overflow-y-auto p-6">
           {loading ? (
