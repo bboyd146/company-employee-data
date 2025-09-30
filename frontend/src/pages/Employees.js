@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Form from "../components/Form";
-import { formatDate } from "../utils/FormatDate";
+import { formatDate } from "../utils/FormatFunctions";
 
 export default function EmployeesPage() {
   const [employees, setEmployees] = useState([]);

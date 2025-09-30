@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from 'react';
 import axios from 'axios';
 import Form from '../components/Form';
-import { formatDate } from '../utils/FormatDate';
+import { formatDate, formatCurrency } from '../utils/FormatFunctions';
 
 export default function Payroll() {
   const [payrolls, setPayrolls] = useState([]);
@@ -111,9 +111,9 @@ export default function Payroll() {
                     <td>{pay.id}</td>
                     <td>{pay.employee_id}</td>
                     <td>{formatDate(pay.pay_date)}</td>
-                    <td>{pay.gross_salary}</td>
-                    <td>{pay.deductions}</td>
-                    <td>{pay.net_salary}</td>
+                    <td>{formatCurrency(pay.gross_salary)}</td>
+                    <td>{formatCurrency(pay.deductions)}</td>
+                    <td>{formatCurrency(pay.net_salary)}</td>
                     <td>{pay.payment_method}</td>
                     <td>
                       <button onClick={() => handleEdit(pay)}>Edit</button>

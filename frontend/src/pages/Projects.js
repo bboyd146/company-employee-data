@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import Form from '../components/Form';
-import { formatDate } from '../utils/FormatDate';
+import { formatDate, formatCurrency } from '../utils/FormatFunctions';
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -110,7 +110,7 @@ export default function Projects() {
                 <td>{proj.project_name}</td>
                 <td>{formatDate(proj.start_date)}</td>
                 <td>{formatDate(proj.end_date)}</td>
-                <td>{proj.budget}</td>
+                <td>{formatCurrency(proj.budget)}</td>
                 <td>
                   <button onClick={() => handleEdit(proj)}>Edit</button>
                   <button onClick={() => handleDelete(proj.id)} style={{ background: "red", color: "#fff" }}>Delete</button>

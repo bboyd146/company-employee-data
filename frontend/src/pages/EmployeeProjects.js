@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 import Form from '../components/Form';
-import { formatDate } from '../utils/FormatDate';
+import { formatDate } from '../utils/FormatFunctions';
 
 
 export default function EmployeeProjects() {

@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from 'react';
 import axios from 'axios';
 import Form from '../components/Form';
-import { formatDate } from '../utils/FormatDate';
+import { formatCurrency } from '../utils/FormatFunctions';
 
 export default function Roles() {
   const [roles, setRoles] = useState([]);
@@ -105,7 +105,7 @@ export default function Roles() {
                 <tr key={role.id}>
                   <td>{role.id}</td>
                   <td>{role.title}</td>
-                  <td>{role.salary}</td>
+                  <td>{formatCurrency(role.salary)}</td>
                   <td>{role.department_id}</td>
                   <td>
                     <button onClick={() => handleEdit(role)}>Edit</button>
