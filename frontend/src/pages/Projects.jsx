@@ -9,7 +9,7 @@ export default function Projects() {
   const [editingProject, setEditingProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const apiUrl = "http://localhost:5001/api/projects";
+  const apiUrl = "http://localhost:5002/api/projects";
 
   useEffect(() => {
     fetchProjects();

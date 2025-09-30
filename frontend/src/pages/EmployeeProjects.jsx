@@ -10,7 +10,7 @@ export default function EmployeeProjects() {
   const [showForm, setShowForm] = useState(false);
   const [editingEmployeeProject, setEditingEmployeeProject] = useState(null);
 
-  const apiUrl = "http://localhost:5001/api/employee-projects";
+  const apiUrl = "http://localhost:5002/api/employee-projects";
 
   useEffect(() => {
     fetchEmployeeProjects();

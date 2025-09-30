@@ -10,7 +10,7 @@ export default function EmployeesPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
 
-  const apiUrl = "http://localhost:5001/api/employees";
+  const apiUrl = "http://localhost:5002/api/employees";
 
   useEffect(() => {
     fetchEmployees();

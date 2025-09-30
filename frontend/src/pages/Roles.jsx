@@ -9,7 +9,7 @@ export default function Roles() {
   const [showForm, setShowForm] = useState(false);
   const [editingRole, setEditingRole] = useState(null);
 
-  const apiUrl = "http://localhost:5001/api/roles";
+  const apiUrl = "http://localhost:5002/api/roles";
 
   useEffect(() => {
     fetchRoles();

@@ -9,7 +9,7 @@ export default function Locations() {
   const [editingLocation, setEditingLocation] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const apiUrl = "http://localhost:5001/api/locations";
+  const apiUrl = "http://localhost:5002/api/locations";
 
   useEffect(() => {
     fetchLocations();

@@ -9,7 +9,7 @@ export default function Departments() {
   const [editingDepartment, setEditingDepartment] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const apiUrl = "http://localhost:5001/api/departments";
+  const apiUrl = "http://localhost:5002/api/departments";
 
   useEffect(() => {
     fetchDepartments();

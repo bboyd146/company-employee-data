@@ -9,7 +9,7 @@ export default function Payroll() {
   const [showForm, setShowForm] = useState(false);
   const [editingPayroll, setEditingPayroll] = useState(null);
 
-  const apiUrl = "http://localhost:5001/api/payroll";
+  const apiUrl = "http://localhost:5002/api/payroll";
 
   useEffect(() => {
     fetchPayrolls();
