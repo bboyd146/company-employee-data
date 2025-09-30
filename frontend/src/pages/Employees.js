@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Form from "../components/Form";
+import { formatDate } from "../utils/FormatDate";
 
 export default function EmployeesPage() {
   const [employees, setEmployees] = useState([]);
@@ -113,7 +114,7 @@ export default function EmployeesPage() {
                   <td>{emp.last_name}</td>
                   <td>{emp.role_id}</td>
                   <td>{emp.manager_id || "—"}</td>
-                  <td>{emp.hire_date ? new Date(emp.hire_date).toLocaleDateString() : "—"}</td>
+                  <td>{formatDate(emp.hire_date)}</td>
                   <td>
                     <button
                       style={{ marginRight: "0.5rem" }}

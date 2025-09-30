@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import Form from '../components/Form';
+import { formatDate } from '../utils/FormatDate';
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -107,8 +108,8 @@ export default function Projects() {
               <tr key={proj.id}>
                 <td>{proj.id}</td>
                 <td>{proj.project_name}</td>
-                <td>{proj.start_date}</td>
-                <td>{proj.end_date}</td>
+                <td>{formatDate(proj.start_date)}</td>
+                <td>{formatDate(proj.end_date)}</td>
                 <td>{proj.budget}</td>
                 <td>
                   <button onClick={() => handleEdit(proj)}>Edit</button>
