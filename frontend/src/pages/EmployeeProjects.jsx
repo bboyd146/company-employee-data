@@ -70,7 +70,7 @@ export default function EmployeeProjects() {
                 fields={[
                   { name: "employee_id", label: "Employee ID", type: "number" },
                   { name: "project_id", label: "Project ID", type: "number" },
-                  { name: "role", label: "Role", type: "text" },
+                  { name: "role_in_project", label: "Role", type: "text" },
                   { name: "assigned_date", label: "Assigned Date", type: "date" },
                 ]}
                 initialData={editingEmployeeProject}
@@ -118,7 +118,7 @@ export default function EmployeeProjects() {
                           {empProj.project_id}
                         </td>
                         <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
-                          {empProj.role_in_project || empProj.role}
+                          {empProj.role_in_project}
                         </td>
                         <td className="px-4 py-2 border-b border-gray-100 text-gray-800 flex gap-2">
                           <button
