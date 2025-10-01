@@ -19,7 +19,7 @@ const Sidebar = ({ menuOpen, toggleMenu }) => {
   return (
     <aside
       className={`fixed md:static z-30 inset-y-0 left-0 transform 
-        ${collapsed ? "w-20" : "w-64"} 
+        ${collapsed ? "w-15" : "w-64"} 
         bg-white shadow-lg border-r border-gray-200 
         transition-all duration-300 ease-in-out
         ${menuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
