@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { formatCurrency, formatDate } from "../utils/FormatFunctions";
+import { Menu } from "lucide-react"; // Hamburger for mobile sidebar
 
 const reportsList = [
   { key: "employee-overview", label: "Employee Overview" },
@@ -19,6 +20,7 @@ export default function Dashboard() {
   const [selectedReport, setSelectedReport] = useState("employee-overview");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     async function fetchReport() {
@@ -36,71 +38,66 @@ export default function Dashboard() {
     }
     fetchReport();
   }, [selectedReport]);
-// === Generate Metrics from Data ===
-const generateMetrics = () => {
-  if (!data || data.length === 0) return [];
 
-  const metrics = [];
+  // === Generate Metrics ===
+  const generateMetrics = () => {
+    if (!data || data.length === 0) return [];
+    const metrics = [];
+    const parseNum = (val) => {
+      if (!val) return 0;
+      if (typeof val === "number") return val;
+      return Number(val.toString().replace(/[^0-9.-]+/g, "")) || 0;
+    };
 
-  // Helper: parse to number safely
-  const parseNum = (val) => {
-    if (val === null || val === undefined) return 0;
-    if (typeof val === "number") return val;
-    if (typeof val === "string") {
-      // Remove $ , and whitespace
-      return Number(val.replace(/[^0-9.-]+/g, "")) || 0;
+    const salaryCol = Object.keys(data[0]).find((c) =>
+      c.toLowerCase().includes("salary")
+    );
+    if (salaryCol) {
+      const total = data.reduce((sum, row) => sum + parseNum(row[salaryCol]), 0);
+      metrics.push({ label: "Total Salary", value: formatCurrency(total) });
     }
-    return 0;
+
+    metrics.push({ label: "Total Records", value: data.length.toLocaleString() });
+
+    const budgetCol = Object.keys(data[0]).find((c) =>
+      c.toLowerCase().includes("budget")
+    );
+    if (budgetCol) {
+      const total = data.reduce((sum, row) => sum + parseNum(row[budgetCol]), 0);
+      metrics.push({ label: "Total Budget", value: formatCurrency(total) });
+    }
+
+    return metrics;
   };
 
-  // Example: salary
-  const salaryCol = Object.keys(data[0]).find((c) =>
-    c.toLowerCase().includes("salary")
-  );
-  if (salaryCol) {
-    const total = data.reduce((sum, row) => sum + parseNum(row[salaryCol]), 0);
-    metrics.push({
-      label: "Total Salary",
-      value: formatCurrency(total),
-    });
-  }
-
-  // Count rows
-  metrics.push({
-    label: "Total Records",
-    value: data.length.toLocaleString(),
-  });
-
-  // Example: budget
-  const budgetCol = Object.keys(data[0]).find((c) =>
-    c.toLowerCase().includes("budget")
-  );
-  if (budgetCol) {
-    const total = data.reduce((sum, row) => sum + parseNum(row[budgetCol]), 0);
-    metrics.push({
-      label: "Total Budget",
-      value: formatCurrency(total),
-    });
-  }
-
-  return metrics;
-};
   const metrics = generateMetrics();
 
   return (
-    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-gray-800 shadow-md p-6 flex flex-col">
-        <h2 className="text-2xl font-bold mb-6">Reports</h2>
-        <ul className="space-y-2 flex-1">
+      <aside
+        className={`fixed md:static z-20 inset-y-0 left-0 transform md:translate-x-0 w-64 bg-white dark:bg-gray-800 shadow-lg border-r border-gray-200 dark:border-gray-700 transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Reports</h2>
+          <button className="md:hidden" onClick={() => setSidebarOpen(false)}>
+            <Menu className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+          </button>
+        </div>
+        <ul className="p-2 space-y-1">
           {reportsList.map((report) => (
             <li key={report.key}>
               <button
-                onClick={() => setSelectedReport(report.key)}
-                className={`w-full text-left px-4 py-2 rounded-lg transition-colors duration-200 ${
+                onClick={() => {
+                  setSelectedReport(report.key);
+                  setSidebarOpen(false);
+                }}
+                className={`w-full text-left px-4 py-2 rounded-lg transition-all duration-200 ${
                   report.key === selectedReport
-                    ? "bg-blue-600 text-white"
-                    : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-700"
                 }`}
               >
                 {report.label}
@@ -111,87 +108,81 @@ const generateMetrics = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-auto">
-        <h1 className="text-3xl font-semibold mb-6">
-          {reportsList.find((r) => r.key === selectedReport)?.label}
-        </h1>
+      <div className="flex-1 flex flex-col">
+        <header className="p-4 border-b border-gray-200 dark:border-gray-700 md:hidden flex justify-between items-center bg-white dark:bg-gray-800 shadow">
+          <h1 className="font-semibold text-lg">{reportsList.find((r) => r.key === selectedReport)?.label}</h1>
+          <button onClick={() => setSidebarOpen(true)}>
+            <Menu className="h-6 w-6" />
+          </button>
+        </header>
 
-        {loading ? (
-          <p className="text-gray-500 dark:text-gray-400">Loading {selectedReport}...</p>
-        ) : (
-          <>
-            {/* Metrics Cards */}
-            {metrics.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {metrics.map((m, i) => (
-                  <div
-                    key={i}
-                    className="bg-white dark:bg-gray-800 shadow rounded-lg p-6 flex flex-col items-start justify-center"
-                  >
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{m.label}</p>
-                    <p className="text-2xl font-bold mt-2">{m.value}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+        <main className="flex-1 p-6 overflow-y-auto">
+          {loading ? (
+            <div className="flex items-center justify-center h-64 animate-pulse">
+              <p className="text-gray-500 dark:text-gray-400 text-lg">
+                Loading {reportsList.find((r) => r.key === selectedReport)?.label}...
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Metrics */}
+              {metrics.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {metrics.map((m, i) => (
+                    <div
+                      key={i}
+                      className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 hover:shadow-lg transition"
+                    >
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{m.label}</p>
+                      <p className="text-2xl font-bold mt-2">{m.value}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-            {/* Data Table */}
-            {data.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="min-w-full border-collapse bg-white dark:bg-gray-800 shadow rounded-lg">
-                  <thead>
-                    <tr className="bg-gray-200 dark:bg-gray-700 text-left">
-                      {Object.keys(data[0]).map((col) => (
-                        <th
-                          key={col}
-                          className="px-6 py-3 text-gray-700 dark:text-gray-200 font-medium"
-                        >
-                          {col}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.map((row, i) => (
-                      <tr
-                        key={i}
-                        className={`border-b dark:border-gray-700 ${
-                          i % 2 === 0 ? "bg-gray-50 dark:bg-gray-900" : ""
-                        }`}
-                      >
-                        {Object.entries(row).map(([col, val], j) => {
-                          let displayValue = val;
-
-                          if (col.toLowerCase().includes("date")) {
-                            displayValue = formatDate(val);
-                          }
-                          if (
-                            col.toLowerCase().includes("salary") ||
-                            col.toLowerCase().includes("budget") ||
-                            col.toLowerCase().includes("paid")
-                          ) {
-                            displayValue = formatCurrency(val);
-                          }
-
-                          return (
-                            <td key={j} className="px-6 py-4">
-                              {displayValue !== null
-                                ? displayValue.toString()
-                                : "—"}
-                            </td>
-                          );
-                        })}
+              {/* Data Table */}
+              {data.length > 0 ? (
+                <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                  <table className="w-full text-sm text-left border-collapse">
+                    <thead className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 uppercase text-xs">
+                      <tr>
+                        {Object.keys(data[0]).map((col) => (
+                          <th key={col} className="px-4 py-3 border-b border-gray-200 dark:border-gray-600">
+                            {col}
+                          </th>
+                        ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="text-gray-500 dark:text-gray-400">No data available</p>
-            )}
-          </>
-        )}
-      </main>
+                    </thead>
+                    <tbody>
+                      {data.map((row, i) => (
+                        <tr
+                          key={i}
+                          className="hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150"
+                        >
+                          {Object.entries(row).map(([col, val], j) => {
+                            let displayValue = val;
+                            if (col.toLowerCase().includes("date")) displayValue = formatDate(val);
+                            if (["salary", "budget", "paid"].some((k) => col.toLowerCase().includes(k))) {
+                              displayValue = formatCurrency(val);
+                            }
+                            return (
+                              <td key={j} className="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
+                                {displayValue !== null ? displayValue.toString() : "—"}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="text-gray-500 dark:text-gray-400">No data available</p>
+              )}
+            </>
+          )}
+        </main>
+      </div>
     </div>
   );
 }
