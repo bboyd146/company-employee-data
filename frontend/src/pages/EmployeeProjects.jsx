@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Form from "../components/Form";
+import Modal from "../components/Modal";
 import { formatDate } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
@@ -9,6 +10,14 @@ export default function EmployeeProjects() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingEmployeeProject, setEditingEmployeeProject] = useState(null);
+
+  // Modal state
+  const [modal, setModal] = useState({
+    open: false,
+    type: "success", // success | error | confirm
+    message: "",
+    confirmAction: null,
+  });
 
   const apiUrl = "http://localhost:5002/api/employee-projects";
 
@@ -38,14 +47,30 @@ export default function EmployeeProjects() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this employee project assignment?")) return;
-    try {
-      await axios.delete(`${apiUrl}/${id}`);
-      fetchEmployeeProjects();
-    } catch (err) {
-      console.error("Delete failed:", err);
-    }
+  const handleDelete = (id) => {
+    setModal({
+      open: true,
+      type: "confirm",
+      message: "Are you sure you want to delete this employee project assignment?",
+      confirmAction: async () => {
+        try {
+          await axios.delete(`${apiUrl}/${id}`);
+          fetchEmployeeProjects();
+          setModal({
+            open: true,
+            type: "success",
+            message: "Assignment deleted successfully.",
+          });
+        } catch (err) {
+          console.error("Delete failed:", err);
+          setModal({
+            open: true,
+            type: "error",
+            message: "Failed to delete assignment.",
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -158,6 +183,15 @@ export default function EmployeeProjects() {
                 <Plus size={18} /> Add Assignment
               </button>
             </div>
+          )}
+
+          {modal.open && (
+            <Modal
+              type={modal.type}
+              message={modal.message}
+              onClose={() => setModal({ ...modal, open: false })}
+              onConfirm={modal.confirmAction}
+            />
           )}
         </main>
       </div>

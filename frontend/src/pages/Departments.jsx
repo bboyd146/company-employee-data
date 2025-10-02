@@ -2,12 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 import Form from "../components/Form";
+import Modal from "../components/Modal";
 
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingDepartment, setEditingDepartment] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Modal state
+  const [modal, setModal] = useState({
+    open: false,
+    type: "success", // success | error | confirm
+    message: "",
+    confirmAction: null,
+  });
 
   const apiUrl = "http://localhost:5002/api/departments";
 
@@ -37,14 +46,30 @@ export default function Departments() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this department?")) return;
-    try {
-      await axios.delete(`${apiUrl}/${id}`);
-      fetchDepartments();
-    } catch (err) {
-      console.error("Delete failed:", err);
-    }
+  const handleDelete = (id) => {
+    setModal({
+      open: true,
+      type: "confirm",
+      message: "Are you sure you want to delete this department?",
+      confirmAction: async () => {
+        try {
+          await axios.delete(`${apiUrl}/${id}`);
+          fetchDepartments();
+          setModal({
+            open: true,
+            type: "success",
+            message: "Department deleted successfully.",
+          });
+        } catch (err) {
+          console.error("Delete failed:", err);
+          setModal({
+            open: true,
+            type: "error",
+            message: "Failed to delete department.",
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -144,6 +169,15 @@ export default function Departments() {
                 <Plus size={18} /> Add Department
               </button>
             </div>
+          )}
+
+          {modal.open && (
+            <Modal
+              type={modal.type}
+              message={modal.message}
+              onClose={() => setModal({ ...modal, open: false })}
+              onConfirm={modal.confirmAction}
+            />
           )}
         </main>
       </div>
