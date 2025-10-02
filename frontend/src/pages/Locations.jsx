@@ -48,17 +48,17 @@ export default function LocationsPage() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="flex-1 flex flex-col">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="flex-1 flex flex-col dark:text-gray-200">
         <main className="flex-1 overflow-y-auto p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-6">Locations</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">Locations</h1>
 
           {loading ? (
             <div className="flex items-center justify-center h-64 animate-pulse">
-              <p className="text-gray-500 text-lg">Loading locations...</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg">Loading locations...</p>
             </div>
           ) : showForm ? (
-            <div className="max-w-xl mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200">
+            <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="Location"
                 apiUrl={apiUrl}
@@ -77,45 +77,45 @@ export default function LocationsPage() {
             </div>
           ) : locations.length > 0 ? (
             <div className="space-y-4">
-              <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200 bg-white">
+              <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
                 <table className="w-full text-sm text-left border-collapse">
-                  <thead className="bg-gray-100 text-gray-700 uppercase text-xs">
+                  <thead className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 uppercase text-xs">
                     <tr>
-                      <th className="px-4 py-3 border-b border-gray-200">ID</th>
-                      <th className="px-4 py-3 border-b border-gray-200">City</th>
-                      <th className="px-4 py-3 border-b border-gray-200">State</th>
-                      <th className="px-4 py-3 border-b border-gray-200">Country</th>
-                      <th className="px-4 py-3 border-b border-gray-200">Actions</th>
+                      <th className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">ID</th>
+                      <th className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">City</th>
+                      <th className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">State</th>
+                      <th className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">Country</th>
+                      <th className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {locations.map((loc) => (
                       <tr
                         key={loc.id}
-                        className="hover:bg-blue-50 transition-colors duration-150"
+                        className="hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-150"
                       >
-                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                        <td className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-100">
                           {loc.id}
                         </td>
-                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                        <td className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-100">
                           {loc.city}
                         </td>
-                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                        <td className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-100">
                           {loc.state}
                         </td>
-                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800">
+                        <td className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-100">
                           {loc.country}
                         </td>
-                        <td className="px-4 py-2 border-b border-gray-100 text-gray-800 flex gap-2">
+                        <td className="px-4 py-2 border-b border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-100 flex gap-2">
                           <button
                             onClick={() => handleEdit(loc)}
-                            className="p-1.5 rounded-lg bg-yellow-100 text-yellow-700 hover:bg-yellow-200 transition"
+                            className="p-1.5 rounded-lg bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-200 dark:hover:bg-yellow-800 transition"
                           >
                             <Edit2 size={16} />
                           </button>
                           <button
                             onClick={() => handleDelete(loc.id)}
-                            className="p-1.5 rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition"
+                            className="p-1.5 rounded-lg bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-800 transition"
                           >
                             <Trash2 size={16} />
                           </button>
@@ -129,17 +129,17 @@ export default function LocationsPage() {
               {/* Add Location button below table */}
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-700 text-white rounded-lg shadow hover:bg-green-700 dark:hover:bg-green-800 transition"
               >
                 <Plus size={18} /> Add Location
               </button>
             </div>
           ) : (
             <div className="space-y-4">
-              <p className="text-gray-500">No locations found.</p>
+              <p className="text-gray-500 dark:text-gray-400">No locations found.</p>
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-700 text-white rounded-lg shadow hover:bg-green-700 dark:hover:bg-green-800 transition"
               >
                 <Plus size={18} /> Add Location
               </button>

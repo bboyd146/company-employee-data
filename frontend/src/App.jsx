@@ -13,7 +13,6 @@ function App() {
       <div className="flex flex-col h-screen">
         {/* Top Navbar */}
         <Navbar toggleMenu={toggleMenu} />
-
         {/* Body Layout */}
         <div className="flex flex-1">
           {/* Sidebar */}

@@ -22,7 +22,7 @@ const Content = () => {
   ];
 
   return (
-    <main className="flex-1 overflow-y-auto p-6 bg-gray-50">
+    <main className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Routes>
         {routes.map((route) => (
           <Route key={route.path} path={route.path} element={route.element} />

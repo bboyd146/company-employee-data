@@ -108,7 +108,7 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col dark:text-gray-200">
         <header className="p-4 border-b border-gray-200 dark:border-gray-700 md:hidden flex justify-between items-center bg-white dark:bg-gray-800 shadow">
           <h1 className="font-semibold text-lg">{reportsList.find((r) => r.key === selectedReport)?.label}</h1>
           <button onClick={() => setSidebarOpen(true)}>
@@ -134,7 +134,7 @@ export default function Dashboard() {
                       className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 hover:shadow-lg transition"
                     >
                       <p className="text-sm text-gray-500 dark:text-gray-400">{m.label}</p>
-                      <p className="text-2xl font-bold mt-2">{m.value}</p>
+                      <p className="text-2xl font-bold mt-2 dark:text-gray-200">{m.value}</p>
                     </div>
                   ))}
                 </div>
