@@ -5,7 +5,7 @@ import Modal from "../components/Modal";
 import { formatDate, formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
