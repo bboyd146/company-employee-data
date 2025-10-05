@@ -19,7 +19,7 @@ app.use(cors({
 app.use(express.json());
 
 // API routes
-app.use(router);
+app.use("/api", router);
 
 // Serve frontend build
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
