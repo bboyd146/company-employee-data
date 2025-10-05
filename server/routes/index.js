@@ -3,7 +3,7 @@ import apiRoutes from "./api/index.js";
 
 const router = Router();
 
-router.use("/api", apiRoutes);
+router.use("/", apiRoutes);
 
 // Catch-all for undefined routes
 router.use((req, res) => {
