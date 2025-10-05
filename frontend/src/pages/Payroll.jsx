@@ -5,6 +5,8 @@ import Modal from "../components/Modal";
 import { formatDate, formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function PayrollPage() {
   const [payrolls, setPayrolls] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,9 +20,6 @@ export default function PayrollPage() {
     message: "",
     confirmAction: null,
   });
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-  const apiUrl = `${API_BASE_URL}/payroll`;
 
   useEffect(() => {
     fetchPayrolls();
@@ -29,7 +28,7 @@ export default function PayrollPage() {
   async function fetchPayrolls() {
     setLoading(true);
     try {
-      const res = await axios.get(apiUrl);
+      const res = await axios.get(`${API_BASE_URL}/payroll`);
       setPayrolls(res.data);
     } catch (err) {
       console.error("Error fetching payrolls:", err);

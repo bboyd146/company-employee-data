@@ -5,6 +5,8 @@ import Modal from "../components/Modal";
 import { formatDate, formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -18,9 +20,6 @@ export default function Projects() {
     message: "",
     confirmAction: null,
   });
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-  const apiUrl = `${API_BASE_URL}/projects`;
 
   useEffect(() => {
     fetchProjects();
@@ -29,7 +28,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
   async function fetchProjects() {
     setLoading(true);
     try {
-      const res = await axios.get(apiUrl);
+      const res = await axios.get(`${API_BASE_URL}/projects`);
       setProjects(res.data);
     } catch (err) {
       console.error("Error fetching projects:", err);
