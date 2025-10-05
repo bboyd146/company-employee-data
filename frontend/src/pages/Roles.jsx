@@ -5,6 +5,8 @@ import Modal from "../components/Modal";
 import { formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function RolesPage() {
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,10 +21,6 @@ export default function RolesPage() {
     confirmAction: null,
   });
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-  const apiUrl = `${API_BASE_URL}/roles`;
-
   useEffect(() => {
     fetchRoles();
   }, []);
@@ -30,7 +28,7 @@ export default function RolesPage() {
   async function fetchRoles() {
     setLoading(true);
     try {
-      const res = await axios.get(apiUrl);
+      const res = await axios.get(`${API_BASE_URL}/roles`);
       setRoles(res.data);
     } catch (err) {
       console.error("Error fetching roles:", err);

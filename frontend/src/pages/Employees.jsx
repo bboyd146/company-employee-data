@@ -5,6 +5,8 @@ import Modal from "../components/Modal";
 import { formatDate } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,10 +21,6 @@ export default function Employees() {
     confirmAction: null, // function to call on confirm
   });
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-
-
-  const apiUrl = `${API_BASE_URL}/employees`;
 
   useEffect(() => {
     fetchEmployees();
@@ -31,7 +29,7 @@ export default function Employees() {
   async function fetchEmployees() {
     setLoading(true);
     try {
-      const res = await axios.get(apiUrl);
+      const res = await axios.get(`${API_BASE_URL}/employees`);
       setEmployees(res.data);
     } catch (err) {
       console.error("Error fetching employees:", err);

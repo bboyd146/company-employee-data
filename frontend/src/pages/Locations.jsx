@@ -4,6 +4,8 @@ import Form from "../components/Form";
 import Modal from "../components/Modal";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function LocationsPage() {
   const [locations, setLocations] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -18,10 +20,6 @@ export default function LocationsPage() {
     confirmAction: null,
   });
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-  const apiUrl = `${API_BASE_URL}/locations`;
-
   useEffect(() => {
     fetchLocations();
   }, []);
@@ -29,7 +27,7 @@ export default function LocationsPage() {
   async function fetchLocations() {
     setLoading(true);
     try {
-      const res = await axios.get(apiUrl);
+      const res = await axios.get(`${API_BASE_URL}/locations`);
       setLocations(res.data);
     } catch (err) {
       console.error("Error fetching locations:", err);

@@ -4,6 +4,7 @@ import { Plus, Edit2, Trash2 } from "lucide-react";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
@@ -19,7 +20,7 @@ export default function Departments() {
     confirmAction: null,
   });
 
-  const apiUrl = "http://localhost:5002/api/departments";
+  // const apiUrl = `${API_BASE_URL}/departments`;
 
   useEffect(() => {
     fetchDepartments();
@@ -28,7 +29,7 @@ export default function Departments() {
   async function fetchDepartments() {
     setLoading(true);
     try {
-      const res = await axios.get(apiUrl);
+      const res = await axios.get(`${API_BASE_URL}/departments`);
       setDepartments(res.data);
     } catch (err) {
       console.error("Error fetching departments:", err);
