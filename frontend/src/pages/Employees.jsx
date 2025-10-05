@@ -19,7 +19,10 @@ export default function Employees() {
     confirmAction: null, // function to call on confirm
   });
 
-  const apiUrl = "http://localhost:5002/api/employees";
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+
+  const apiUrl = `${API_BASE_URL}/employees`;
 
   useEffect(() => {
     fetchEmployees();

@@ -16,6 +16,8 @@ const reportsList = [
   { key: "payroll-by-method", label: "Payroll by Method" },
 ];
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function Dashboard() {
   const [selectedReport, setSelectedReport] = useState("employee-overview");
   const [data, setData] = useState([]);
@@ -27,7 +29,7 @@ export default function Dashboard() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:5002/api/reports/${selectedReport}`
+          `${API_BASE_URL}/reports/${selectedReport}`
         );
         setData(res.data);
       } catch (err) {

@@ -19,7 +19,9 @@ export default function EmployeeProjects() {
     confirmAction: null,
   });
 
-  const apiUrl = "http://localhost:5002/api/employee-projects";
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+  const apiUrl = `${API_BASE_URL}/employee-projects`;
 
   useEffect(() => {
     fetchEmployeeProjects();

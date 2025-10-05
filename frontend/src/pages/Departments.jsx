@@ -4,6 +4,7 @@ import { Plus, Edit2, Trash2 } from "lucide-react";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 
+
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
   const [showForm, setShowForm] = useState(false);

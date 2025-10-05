@@ -18,8 +18,9 @@ export default function Projects() {
     message: "",
     confirmAction: null,
   });
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-  const apiUrl = "http://localhost:5002/api/projects";
+  const apiUrl = `${API_BASE_URL}/projects`;
 
   useEffect(() => {
     fetchProjects();
