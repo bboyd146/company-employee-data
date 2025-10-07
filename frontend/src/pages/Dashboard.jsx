@@ -19,7 +19,6 @@ const reportsList = [
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 export default function Dashboard() {
-  console.log("API_BASE_URL:", import.meta.env.VITE_API_URL || "/api");
 
   const [selectedReport, setSelectedReport] = useState("employee-overview");
   const [data, setData] = useState([]);

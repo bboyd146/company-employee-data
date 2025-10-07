@@ -1,76 +1,195 @@
-# Company-Database-Management  
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# Company-Database-Management
 
-## Description
-This project is a Company Management System built with MySQL as the database foundation.
-The database models key aspects of a company, including:
-- Employees (with roles, managers, payroll, and projects)
-- Departments and their locations
-- Projects and employee assignments
-- Payroll and compensation tracking
+**License:** MIT ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-The schema enforces referential integrity with foreign keys, cascading rules, and self-references for hierarchical relationships (e.g., employees managed by other employees).
+## 🌐 Live Application
 
-🔮 Future Development
+**Deployed URL:** [https://company-employee-data.onrender.com/](https://company-employee-data.onrender.com/)
 
-This is the backend foundation for a full-stack application.
-In the next phases, we plan to add a front-end user interface that will allow:
-- HR staff to add and manage employees, roles, and departments
-- Project managers to assign employees to projects and track budgets
-- Employees to view their details and project assignments
-- Automated payroll tracking and reporting
+---
 
-The front end will be built with React and will interact with this MySQL database through a Node.js/Express API.
+## 🏢 Description
 
-Ultimately, the goal is to provide a realistic company management system that simulates how modern businesses organize employees, projects, and finances.
+The **Company Database Management System** is a full-stack web application that visualizes and manages a company’s organizational data.
+It connects a **MySQL database** (hosted on AWS RDS) to an **Express/Node.js backend** and a **React frontend**, all deployed on **Render**.
 
-## Table of Contents
+This platform provides interactive reports for:
 
-- [Installation](#Installation)
-- [Usage](#Usage)
-- [Credits](#Credits)
-- [License](#License)
-- [Badges](#Badges)
-- [Features](#Features)
-- [How to Contribute](#How-to-Contribute)
-- [Tests](#Tests)
-- [Questions](#Questions)
+* Employee management and reporting hierarchy
+* Departmental budgets and projects
+* Salary distributions across departments
+* Payroll and financial insights
 
-## Installation 
-Ultimately, the goal is to provide a realistic company management system that simulates how modern businesses organize employees, projects, and finances.Step 1: clone repository, Step 2: run "npm install"
+The system enforces **referential integrity** through foreign keys, cascading rules, and self-references for hierarchical employee relationships (e.g., employees managed by other employees).
 
-## Usage 
-npm install, node index.js  
-![alt text](assets/images/)
+---
 
-## Credits 
-Blake Waugh and Caidon Buchanan
+## 🚀 Key Features
 
-## License 
-[MIT Link](https://opensource.org/licenses/MIT)  
-   Copyright 2025 Bradley Boyd
+* **Dynamic Dashboard:** Interactive reports and data visualizations updated directly from the MySQL database.
+* **Department Analytics:** Average and total salary breakdowns by department.
+* **Organizational Hierarchy:** Employee-to-manager relationships displayed in a clean tabular view.
+* **Financial Oversight:** Department budget summaries and active project tracking.
+* **Secure Cloud Hosting:** Backend API and database hosted with secure environment variable configuration via Render and AWS RDS.
+* **Dark Mode UI:** User interface includes a dark theme for improved readability and modern design.
 
-      Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-      
-      The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-      
-      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+---
 
-## Badges
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## 📊 Query Output Previews
 
-## Features
-future development
+### 1. Salary by Department
 
-## How to Contribute
-for contributions, contact me by email: bboyd146@gmail.com
+Displays total and average salary data for all departments, providing HR teams a quick financial overview.
+**Key Columns:** `DEP_NAME`, `AVG_SALARY`, `TOTAL_SALARY`
+**Screenshot:**
+![Salary by Department](./screenshots/salary-by-department.png) <!-- replace with your screenshot -->
 
-## Tests
-future development
+---
 
-## Questions
-Github username: bboyd146  
-Link to Github: (https://github.com/bboyd146)  
+### 2. Employees & Managers
 
-Email: bboyd146@gmail.com  
-Instructions on how to contact: contact me by email  
+Shows employee names with their corresponding managers to map the company hierarchy.
+**Key Columns:** `EMPLOYEE_FIRST`, `EMPLOYEE_LAST`, `MANAGER_FIRST`, `MANAGER_LAST`
+**Screenshot:**
+![Employees and Managers](./screenshots/employees-managers.png)
+
+---
+
+### 3. Department Budgets
+
+Summarizes total department budgets and the number of active projects within each department.
+**Key Columns:** `DEP_NAME`, `PROJECT_COUNT`, `TOTAL_BUDGET`
+**Screenshot:**
+![Department Budgets](./screenshots/department-budgets.png)
+
+---
+
+## 🧠 Technical Overview
+
+**Backend:**
+
+* Node.js + Express REST API
+* MySQL2 & dotenv for secure database interaction
+* Hosted API routes for dynamic frontend requests
+
+**Database:**
+
+* AWS RDS MySQL instance
+* Seeded via Workbench and SQL Shell
+* Schema includes normalized relationships for departments, employees, roles, projects, and payroll
+
+**Frontend:**
+
+* React + Vite
+* TailwindCSS for styling
+* Dark mode toggle and responsive layout
+* Fetches data dynamically from deployed backend
+
+**Hosting:**
+
+* Render (for both frontend and backend)
+* Environment variables configured via Render dashboard
+* AWS RDS public access with proper security group permissions
+
+---
+
+## 🛠️ Installation
+
+**Step 1:** Clone this repository
+
+```bash
+git clone https://github.com/bboyd146/Company-Database-Management.git
+cd Company-Database-Management
+```
+
+**Step 2:** Install dependencies
+
+```bash
+npm install
+```
+
+**Step 3:** Create a `.env` file in the root directory
+
+```
+MYSQL_HOST=your-rds-endpoint
+MYSQL_USER=your-username
+MYSQL_PASSWORD=your-password
+MYSQL_DATABASE=your-database
+```
+
+**Step 4:** Run the server
+
+```bash
+cd server
+node index.js
+```
+
+**Step 5:** Start the frontend
+
+```bash
+cd client
+npm run dev
+```
+
+---
+
+## 🧩 Usage
+
+Once deployed or running locally, the dashboard allows users to:
+
+* View department financials
+* Review employee and manager structures
+* Analyze salaries and project budgets
+
+Live Demo: [Company Database Portal](https://company-employee-data.onrender.com/)
+
+---
+
+## 🧑‍💻 Credits
+
+**Developers:**
+
+* **Bradley Boyd** -- Project Lead, Backend & Development
+* **Blake Waugh** -- Database Design & Seeding
+* **Caidon Buchanan** -- UI/UX & Front-End
+
+---
+
+## 📄 License
+
+**MIT License**
+Copyright © 2025 Bradley Boyd
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+
+---
+
+## 🛡️ Badges
+
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![MySQL](https://img.shields.io/badge/Database-MySQL-blue.svg)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-orange.svg)
+![React](https://img.shields.io/badge/Frontend-React-lightblue.svg)
+
+---
+
+## 🤝 How to Contribute
+
+For contributions, please contact:
+📧 **[bboyd146@gmail.com](mailto:bboyd146@gmail.com)**
+
+---
+
+## 🧪 Tests
+
+Future development: automated tests for backend routes and database validation.
+
+---
+
+## ❓ Questions
+
+**GitHub:** [bboyd146](https://github.com/bboyd146)
+**Email:** [bboyd146@gmail.com](mailto:bboyd146@gmail.com)
+**Preferred Contact:** Email
