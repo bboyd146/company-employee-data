@@ -41,9 +41,10 @@ The system enforces **referential integrity** through foreign keys, cascading ru
 
 Displays total and average salary data for all departments, providing HR teams a quick financial overview.
 **Key Columns:** `DEP_NAME`, `AVG_SALARY`, `TOTAL_SALARY`
+
 **Screenshot:**
 
-![Salary by Department](<img width="1877" height="711" alt="Screenshot 2025-10-06 at 7 30 45 PM" src="https://github.com/user-attachments/assets/14adddfc-0167-4638-9deb-7163d52de686" />) <!-- replace with your screenshot -->
+<img width="1877" height="711" alt="Screenshot 2025-10-06 at 7 30 45 PM" src="https://github.com/user-attachments/assets/14adddfc-0167-4638-9deb-7163d52de686" /> 
 
 ---
 
@@ -51,9 +52,11 @@ Displays total and average salary data for all departments, providing HR teams a
 
 Shows employee names with their corresponding managers to map the company hierarchy.
 **Key Columns:** `EMPLOYEE_FIRST`, `EMPLOYEE_LAST`, `MANAGER_FIRST`, `MANAGER_LAST`
-**Screenshot:**
-![Employees and Managers](<img width="1886" height="668" alt="Screenshot 2025-10-06 at 7 30 54 PM" src="https://github.com/user-attachments/assets/085371b1-da9b-4309-ad96-4c75da1094ce" />)
 
+**Screenshot:**
+
+
+<img width="1886" height="668" alt="Screenshot 2025-10-06 at 7 30 54 PM" src="https://github.com/user-attachments/assets/085371b1-da9b-4309-ad96-4c75da1094ce" />
 
 ---
 
@@ -61,9 +64,10 @@ Shows employee names with their corresponding managers to map the company hierar
 
 Summarizes total department budgets and the number of active projects within each department.
 **Key Columns:** `DEP_NAME`, `PROJECT_COUNT`, `TOTAL_BUDGET`
+
 **Screenshot:**
-![Department Budgets](<img width="1884" height="664" alt="Screenshot 2025-10-06 at 7 31 07 PM" src="https://github.com/user-attachments/assets/0e5a3cab-6f1c-4a03-af9c-2503adda6893" />
-)
+<img width="1884" height="664" alt="Screenshot 2025-10-06 at 7 31 07 PM" src="https://github.com/user-attachments/assets/0e5a3cab-6f1c-4a03-af9c-2503adda6893" />
+
 
 ---
 
