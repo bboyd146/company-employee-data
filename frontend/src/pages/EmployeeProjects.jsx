@@ -169,7 +169,7 @@ export default function EmployeeProjects() {
               {/* Add button at bottom */}
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-700 text-white rounded-lg shadow hover:bg-green-700 dark:hover:bg-green-800 transition"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
               >
                 <Plus size={18} /> Add Assignment
               </button>
@@ -179,7 +179,7 @@ export default function EmployeeProjects() {
               <p className="text-gray-500 dark:text-gray-400">No employee project assignments found.</p>
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-700 text-white rounded-lg shadow hover:bg-green-700 dark:hover:bg-green-800 transition"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
               >
                 <Plus size={18} /> Add Assignment
               </button>
