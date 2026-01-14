@@ -13,85 +13,79 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError("Passwords do not match");
       return;
     }
 
     setLoading(true);
-
     try {
       const res = await api.post("/auth/register", { email, password });
       localStorage.setItem("token", res.data.token);
       navigate("/");
     } catch (err) {
-      setError(
-        err.response?.data?.error || "Registration failed. Please try again."
-      );
+      setError(err.response?.data?.error || "Registration failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white p-6 rounded shadow"
-      >
-        <h1 className="text-2xl font-semibold mb-6 text-center">Register</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-slate-900 to-black">
+      <div className="w-full max-w-md p-8 rounded-xl bg-white/10 backdrop-blur-lg shadow-2xl border border-white/20 animate-fadeIn">
+        <h1 className="text-3xl font-bold text-white mb-2">Create your account</h1>
+        <p className="text-slate-300 mb-6">Start managing your company data</p>
 
         {error && (
-          <div className="mb-4 text-sm text-red-600 bg-red-50 p-2 rounded">
+          <div className="mb-4 text-sm text-red-400 bg-red-500/10 p-2 rounded">
             {error}
           </div>
         )}
 
-        <label className="block mb-2 text-sm font-medium">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full mb-4 p-2 border rounded"
-        />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
 
-        <label className="block mb-2 text-sm font-medium">Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full mb-4 p-2 border rounded"
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
 
-        <label className="block mb-2 text-sm font-medium">
-          Confirm Password
-        </label>
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-          className="w-full mb-6 p-2 border rounded"
-        />
+          <input
+            type="password"
+            placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded bg-white/10 border border-white/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50"
-        >
-          {loading ? "Creating account..." : "Register"}
-        </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition disabled:opacity-50"
+          >
+            {loading ? "Creating account..." : "Create account"}
+          </button>
+        </form>
 
-        <p className="mt-4 text-sm text-center">
+        <p className="mt-6 text-center text-slate-400 text-sm">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-600 hover:underline">
-            Login
+          <Link to="/login" className="text-indigo-400 hover:underline">
+            Sign in
           </Link>
         </p>
-      </form>
+      </div>
     </div>
   );
 }
