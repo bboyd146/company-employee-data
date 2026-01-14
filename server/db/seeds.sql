@@ -1,3 +1,7 @@
+INSERT INTO users (email, password_hash)
+VALUES ('demo@demo.com', '$2a$10$REPLACE_WITH_BCRYPT_HASH');
+
+
 INSERT INTO location(address, city, state, country) VALUES
 ('123 Main St', 'Springfield', 'IL', 'USA'),
 ('456 Elm St', 'Metropolis', 'NY', 'USA'),
