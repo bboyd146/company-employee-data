@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 import { Plus, Edit2, Trash2 } from "lucide-react";
@@ -27,7 +28,7 @@ export default function LocationsPage() {
   async function fetchLocations() {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/locations`);
+      const res = await api.get(`${API_BASE_URL}/locations`);
       setLocations(res.data);
     } catch (err) {
       console.error("Error fetching locations:", err);
@@ -86,7 +87,7 @@ export default function LocationsPage() {
             <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="Location"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/locations"}
                 fields={[
                   { name: "city", label: "City", type: "text", required: true },
                   { name: "state", label: "State", type: "text", required: true },

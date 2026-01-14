@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 import { formatDate } from "../utils/FormatFunctions";
@@ -29,7 +30,7 @@ export default function EmployeeProjects() {
   async function fetchEmployeeProjects() {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/employee-projects`);
+      const res = await api.get(`${API_BASE_URL}/employee-projects`);
       setEmployeeProjects(res.data);
     } catch (err) {
       console.error("Error fetching employee projects:", err);
@@ -92,7 +93,7 @@ export default function EmployeeProjects() {
             <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="employee-project"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/employee-projects"}
                 fields={[
                   { name: "employee_id", label: "Employee ID", type: "number" },
                   { name: "project_id", label: "Project ID", type: "number" },

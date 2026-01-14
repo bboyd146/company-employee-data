@@ -6,7 +6,7 @@ const router = Router();
 // get all locations
 router.get('/', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM location');
+        const [rows] = await db.query('SELECT * FROM location WHERE user_id = ?', [req.user.id]);
         res.json(rows);
     } catch (err) {
         next(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 // get location by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM location WHERE id = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM location WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Location not found' });
         }
@@ -31,8 +31,8 @@ router.post('/', async (req, res, next) => {
     try {
         const { address, city, state, country } = req.body;
         const [result] = await db.query(
-            'INSERT INTO location (address, city, state, country) VALUES (?, ?, ?, ?)',
-            [address, city, state, country]
+            'INSERT INTO location (user_id, address, city, state, country) VALUES (?, ?, ?, ?, ?)',
+            [req.user.id, address, city, state, country]
         );
         res.status(201).json({ id: result.insertId, address, city, state, country });
     } catch (err) {
@@ -45,8 +45,8 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { address, city, state, country } = req.body;
         const [result] = await db.query(
-            'UPDATE location SET address = ?, city = ?, state = ?, country = ? WHERE id = ?',
-            [address, city, state, country, req.params.id]
+            'UPDATE location SET address = ?, city = ?, state = ?, country = ? WHERE id = ? AND user_id = ?',
+            [address, city, state, country, req.params.id, req.user.id]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Location not found' });
@@ -60,7 +60,7 @@ router.put('/:id', async (req, res, next) => {
 // delete a location
 router.delete('/:id', async (req, res, next) => {
     try {
-        const [result] = await db.query('DELETE FROM location WHERE id = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM location WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Location not found' });
         }

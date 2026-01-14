@@ -18,9 +18,10 @@ router.get("/employee-overview", async (req, res) => {
         JOIN location l ON d.location_id = l.id
         LEFT JOIN employee_project ep ON e.id = ep.employee_id
         LEFT JOIN project p ON ep.project_id = p.id
+        WHERE e.user_id = ?
         GROUP BY e.id, e.first_name, e.last_name, r.title, r.salary, d.dep_name, l.city
         ORDER BY e.last_name, e.first_name;
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -35,8 +36,9 @@ router.get("/salary-by-department", async (req, res) => {
         SELECT d.dep_name, AVG(r.salary) AS avg_salary, SUM(r.salary) AS total_salary
         FROM roles r
         JOIN department d ON r.department_id = d.id
+        WHERE r.user_id = ?
         GROUP BY d.dep_name
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -53,7 +55,8 @@ router.get("/employee-managers", async (req, res) => {
         FROM employee e
         LEFT JOIN employee m ON e.manager_id = m.id
         ORDER BY manager_last, employee_last
-    `);
+        WHERE e.user_id = ?
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -74,9 +77,10 @@ router.get("/active-projects", async (req, res) => {
         FROM project p
         LEFT JOIN employee_project ep ON p.id = ep.project_id
         LEFT JOIN employee e ON ep.employee_id = e.id
-        WHERE p.end_date IS NULL OR p.end_date > CURDATE()
+        WHERE p.user_id = ?
+        AND (p.end_date IS NULL OR p.end_date > CURDATE())
         ORDER BY p.project_name, e.last_name
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -92,8 +96,9 @@ router.get("/department-budgets", async (req, res) => {
         SELECT d.dep_name, COUNT(p.id) AS project_count, SUM(p.budget) AS total_budget
         FROM department d
         LEFT JOIN project p ON d.id = p.department_id
+        WHERE d.user_id = ?
         GROUP BY d.dep_name
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -109,8 +114,9 @@ router.get("/payroll-history", async (req, res) => {
             pr.net_salary, pr.payment_method
         FROM payroll pr
         JOIN employee e ON pr.employee_id = e.id
+        WHERE e.user_id = ?
         ORDER BY e.last_name, pr.pay_date DESC
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -125,9 +131,10 @@ router.get("/employees-multiple-projects", async (req, res) => {
         SELECT e.first_name, e.last_name, COUNT(ep.project_id) AS project_count
         FROM employee e
         JOIN employee_project ep ON e.id = ep.employee_id
+        WHERE e.user_id = ?
         GROUP BY e.id
         HAVING project_count > 1
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -143,8 +150,9 @@ router.get("/employees-by-location", async (req, res) => {
         JOIN department d ON l.id = d.location_id
         JOIN roles r ON d.id = r.department_id
         JOIN employee e ON r.id = e.role_id
+        WHERE e.user_id = ?
         GROUP BY l.city, l.state
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -159,9 +167,10 @@ router.get("/projects-over-budget", async (req, res) => {
         FROM project p
         JOIN employee_project ep ON p.id = ep.project_id
         JOIN payroll pr ON ep.employee_id = pr.employee_id
+        WHERE p.user_id = ?
         GROUP BY p.id
         HAVING total_paid > p.budget
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -174,8 +183,9 @@ router.get("/payroll-by-method", async (req, res) => {
         const [rows] = await db.query(`
         SELECT payment_method, COUNT(*) AS count, SUM(net_salary) AS total_paid
         FROM payroll
+        WHERE user_id = ?
         GROUP BY payment_method
-    `);
+    `, [req.user.id]);
         res.json(rows);
     } catch (err) {
         res.status(500).json({ error: err.message });

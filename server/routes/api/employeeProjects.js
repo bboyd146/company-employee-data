@@ -6,7 +6,7 @@ const router = Router();
 //get all employee projects
 router.get('/', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM employee_project');
+        const [rows] = await db.query('SELECT * FROM employee_project WHERE user_id = ?', [req.user.id]);
         res.json(rows);
     } catch (err) {
         next(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 //get employee project by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM employee_project WHERE id = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM employee_project WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Employee Project not found' });
         }
@@ -31,8 +31,8 @@ router.post('/', async (req, res, next) => {
     try {
         const { employee_id, project_id, role_in_project } = req.body;
         const [result] = await db.query(
-            'INSERT INTO employee_project (employee_id, project_id, role_in_project) VALUES (?, ?, ?)',
-            [employee_id, project_id, role_in_project]
+            'INSERT INTO employee_project (user_id, employee_id, project_id, role_in_project) VALUES (?, ?, ?, ?)',
+            [req.user.id, employee_id, project_id, role_in_project]
         );
         res.status(201).json({ id: result.insertId, employee_id, project_id, role_in_project });
     } catch (err) {
@@ -45,8 +45,8 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { employee_id, project_id, role_in_project } = req.body;
         const [result] = await db.query(
-            'UPDATE employee_project SET employee_id = ?, project_id = ?, role_in_project = ? WHERE id = ?',
-            [employee_id, project_id, role_in_project, req.params.id]
+            'UPDATE employee_project SET employee_id = ?, project_id = ?, role_in_project = ? WHERE id = ? AND user_id = ?',
+            [employee_id, project_id, role_in_project, req.params.id, req.user.id]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Employee Project not found' });
@@ -60,7 +60,7 @@ router.put('/:id', async (req, res, next) => {
 //delete an employee project
 router.delete('/:id', async (req, res, next) => {
     try {
-        const [result] = await db.query('DELETE FROM employee_project WHERE id = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM employee_project WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Employee Project not found' });
         }

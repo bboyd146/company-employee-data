@@ -6,7 +6,7 @@ const router = Router();
 // get all projects
 router.get('/', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM project');
+        const [rows] = await db.query('SELECT * FROM project WHERE user_id = ?', [req.user.id]);
         res.json(rows);
     } catch (err) {
         next(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 // get project by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM project WHERE id = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM project WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Project not found' });
         }
@@ -31,8 +31,8 @@ router.post('/', async (req, res, next) => {
     try {
         const { project_name, budget, start_date, end_date, department_id } = req.body;
         const [result] = await db.query(
-            'INSERT INTO project (project_name, budget, start_date, end_date, department_id) VALUES (?, ?, ?, ?, ?)',
-            [project_name, budget, start_date, end_date, department_id]
+            'INSERT INTO project (user_id, project_name, budget, start_date, end_date, department_id) VALUES (?, ?, ?, ?, ?, ?)',
+            [req.user.id, project_name, budget, start_date, end_date, department_id]
         );
         res.status(201).json({ id: result.insertId, project_name, budget, start_date, end_date, department_id });
     } catch (err) {
@@ -45,8 +45,8 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { project_name, budget, start_date, end_date, department_id } = req.body;
         const [result] = await db.query(
-            'UPDATE project SET project_name = ?, budget = ?, start_date = ?, end_date = ?, department_id = ? WHERE id = ?',
-            [project_name, budget, start_date, end_date, department_id, req.params.id]
+            'UPDATE project SET project_name = ?, budget = ?, start_date = ?, end_date = ?, department_id = ? WHERE id = ? AND user_id = ?',
+            [project_name, budget, start_date, end_date, department_id, req.params.id, req.user.id]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Project not found' });
@@ -60,7 +60,7 @@ router.put('/:id', async (req, res, next) => {
 // delete a project
 router.delete('/:id', async (req, res, next) => {
     try {
-        const [result] = await db.query('DELETE FROM project WHERE id = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM project WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Project not found' });
         }

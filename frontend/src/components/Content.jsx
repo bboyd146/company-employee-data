@@ -1,5 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import RequireAuth from "./RequireAuth";
+
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import Departments from "../pages/Departments";
 import Employees from "../pages/Employees";
@@ -11,14 +15,17 @@ import EmployeeProjects from "../pages/EmployeeProjects";
 
 const Content = () => {
   const routes = [
-    { path: "/", element: <Dashboard /> },
-    { path: "/departments", element: <Departments /> },
-    { path: "/employees", element: <Employees /> },
-    { path: "/projects", element: <Projects /> },
-    { path: "/roles", element: <Roles /> },
-    { path: "/locations", element: <Locations /> },
-    { path: "/payroll", element: <Payroll /> },
-    { path: "/employee-projects", element: <EmployeeProjects /> },
+    { path: "/login", element: <Login /> },
+    { path: "/register", element: <Register /> },
+
+    { path: "/", element: <RequireAuth><Dashboard /></RequireAuth> },
+    { path: "/departments", element: <RequireAuth><Departments /></RequireAuth> },
+    { path: "/employees", element: <RequireAuth><Employees /></RequireAuth> },
+    { path: "/projects", element: <RequireAuth><Projects /></RequireAuth> },
+    { path: "/roles", element: <RequireAuth><Roles /></RequireAuth> },
+    { path: "/locations", element: <RequireAuth><Locations /></RequireAuth> },
+    { path: "/payroll", element: <RequireAuth><Payroll /></RequireAuth> },
+    { path: "/employee-projects", element: <RequireAuth><EmployeeProjects /></RequireAuth> },
   ];
 
   return (

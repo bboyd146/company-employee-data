@@ -1,4 +1,7 @@
 import { Router } from "express";
+import authRouter from "./auth.js";
+import requireAuth from "../../middleware/requireAuth.js";
+
 import employeesRouter from "./employees.js";
 import departmentsRouter from "./departments.js";
 import rolesRouter from "./roles.js";
@@ -9,6 +12,9 @@ import payrollRouter from "./payroll.js";
 import reportsRouter from "./reports.js";
 
 const router = Router();
+
+router.use("/auth", authRouter);
+router.use(requireAuth); // Protect all routes below
 
 router.use("/employees", employeesRouter);
 router.use("/departments", departmentsRouter);
