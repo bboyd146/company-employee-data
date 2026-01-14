@@ -29,6 +29,7 @@ export default function Login() {
       <div className="w-full max-w-md p-8 rounded-xl bg-white/10 backdrop-blur-lg shadow-2xl border border-white/20 animate-fadeIn">
         <h1 className="text-3xl font-bold text-white mb-2">Welcome back</h1>
         <p className="text-slate-300 mb-6">Log in to your company dashboard</p>
+        <p className="text-slate-200 mb-6">For sample data use email: <code>demo@demo.com</code> and password: <code>password123</code></p>
 
         {error && (
           <div className="mb-4 text-sm text-red-400 bg-red-500/10 p-2 rounded">
