@@ -1,5 +1,5 @@
 INSERT INTO users (email, password_hash)
-VALUES ('demo@demo.com', '$2b$10$7sq4s./mSVCvsfMrPLRufeMCgO8Q5IUunR1ZKiGC5lxKYQjL2PS82');
+VALUES ('demo@demo.com', '$2b$10$wBZS2k.aLLX1cFnLvX.0X.4k8Dv6KIF.gYTidLXoQLUpQI0pVuEMq');
 
 
 INSERT INTO location(user_id, address, city, state, country) VALUES
