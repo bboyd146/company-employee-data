@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 import { formatCurrency } from "../utils/FormatFunctions";
@@ -28,7 +29,7 @@ export default function RolesPage() {
   async function fetchRoles() {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/roles`);
+      const res = await api.get(`${API_BASE_URL}/roles`);
       setRoles(res.data);
     } catch (err) {
       console.error("Error fetching roles:", err);

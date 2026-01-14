@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/api";
 import { formatCurrency, formatDate } from "../utils/FormatFunctions";
 import { Menu } from "lucide-react"; // Hamburger for mobile sidebar
 
@@ -29,7 +30,7 @@ export default function Dashboard() {
     async function fetchReport() {
       setLoading(true);
       try {
-        const res = await axios.get(
+        const res = await api.get(
           `${API_BASE_URL}/reports/${selectedReport}`
         );
         setData(res.data);

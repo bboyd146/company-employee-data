@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/api";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
@@ -29,7 +30,7 @@ export default function Departments() {
   async function fetchDepartments() {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/departments`);
+      const res = await api.get(`${API_BASE_URL}/departments`);
       setDepartments(res.data);
     } catch (err) {
       console.error("Error fetching departments:", err);

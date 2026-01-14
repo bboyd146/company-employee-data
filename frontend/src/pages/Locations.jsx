@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 import { Plus, Edit2, Trash2 } from "lucide-react";
@@ -27,7 +28,7 @@ export default function LocationsPage() {
   async function fetchLocations() {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/locations`);
+      const res = await api.get(`${API_BASE_URL}/locations`);
       setLocations(res.data);
     } catch (err) {
       console.error("Error fetching locations:", err);

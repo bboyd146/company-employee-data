@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
 import { formatDate, formatCurrency } from "../utils/FormatFunctions";
@@ -28,7 +29,7 @@ export default function PayrollPage() {
   async function fetchPayrolls() {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_BASE_URL}/payroll`);
+      const res = await api.get(`${API_BASE_URL}/payroll`);
       setPayrolls(res.data);
     } catch (err) {
       console.error("Error fetching payrolls:", err);
