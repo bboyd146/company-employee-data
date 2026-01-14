@@ -31,7 +31,7 @@ export default function Dashboard() {
       setLoading(true);
       try {
         const res = await api.get(
-          `${API_BASE_URL}/reports/${selectedReport}`
+          `/reports/${selectedReport}`
         );
         setData(res.data);
       } catch (err) {
