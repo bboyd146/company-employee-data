@@ -6,8 +6,6 @@ import Modal from "../components/Modal";
 import { formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-
 export default function RolesPage() {
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +27,7 @@ export default function RolesPage() {
   async function fetchRoles() {
     setLoading(true);
     try {
-      const res = await api.get(`${API_BASE_URL}/roles`);
+      const res = await api.get(`/roles`);
       setRoles(res.data);
     } catch (err) {
       console.error("Error fetching roles:", err);
@@ -156,7 +154,7 @@ export default function RolesPage() {
               {/* Add Role button below table */}
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-700 text-white rounded-lg shadow hover:bg-green-700 dark:hover:bg-green-800 transition"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
               >
                 <Plus size={18} /> Add Role
               </button>
@@ -166,7 +164,7 @@ export default function RolesPage() {
               <p className="text-gray-500 dark:text-gray-400">No roles found.</p>
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 dark:bg-green-700 text-white rounded-lg shadow hover:bg-green-700 dark:hover:bg-green-800 transition"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
               >
                 <Plus size={18} /> Add Role
               </button>

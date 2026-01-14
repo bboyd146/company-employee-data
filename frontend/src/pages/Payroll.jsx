@@ -6,8 +6,6 @@ import Modal from "../components/Modal";
 import { formatDate, formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-
 export default function PayrollPage() {
   const [payrolls, setPayrolls] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +27,7 @@ export default function PayrollPage() {
   async function fetchPayrolls() {
     setLoading(true);
     try {
-      const res = await api.get(`${API_BASE_URL}/payroll`);
+      const res = await api.get(`/payroll`);
       setPayrolls(res.data);
     } catch (err) {
       console.error("Error fetching payrolls:", err);
@@ -170,7 +168,7 @@ export default function PayrollPage() {
               {/* Add Payroll button below table */}
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow transition"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
               >
                 <Plus size={18} /> Add Payroll
               </button>
@@ -180,7 +178,7 @@ export default function PayrollPage() {
               <p className="text-gray-500 dark:text-gray-400">No payroll records found.</p>
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow transition"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition"
               >
                 <Plus size={18} /> Add Payroll
               </button>
