@@ -6,8 +6,6 @@ import Modal from "../components/Modal";
 import { formatDate, formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -29,7 +27,7 @@ export default function Projects() {
   async function fetchProjects() {
     setLoading(true);
     try {
-      const res = await api.get(`${API_BASE_URL}/projects`);
+      const res = await api.get(`/projects`);
       setProjects(res.data);
     } catch (err) {
       console.error("Error fetching projects:", err);

@@ -6,8 +6,6 @@ import Modal from "../components/Modal";
 import { formatDate, formatCurrency } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-
 export default function PayrollPage() {
   const [payrolls, setPayrolls] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +27,7 @@ export default function PayrollPage() {
   async function fetchPayrolls() {
     setLoading(true);
     try {
-      const res = await api.get(`${API_BASE_URL}/payroll`);
+      const res = await api.get(`/payroll`);
       setPayrolls(res.data);
     } catch (err) {
       console.error("Error fetching payrolls:", err);

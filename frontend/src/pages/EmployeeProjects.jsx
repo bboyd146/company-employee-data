@@ -6,7 +6,6 @@ import Modal from "../components/Modal";
 import { formatDate } from "../utils/FormatFunctions";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 export default function EmployeeProjects() {
   const [employeeProjects, setEmployeeProjects] = useState([]);
@@ -30,7 +29,7 @@ export default function EmployeeProjects() {
   async function fetchEmployeeProjects() {
     setLoading(true);
     try {
-      const res = await api.get(`${API_BASE_URL}/employee-projects`);
+      const res = await api.get(`/employee-projects`);
       setEmployeeProjects(res.data);
     } catch (err) {
       console.error("Error fetching employee projects:", err);

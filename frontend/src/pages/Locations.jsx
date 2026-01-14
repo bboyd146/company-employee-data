@@ -5,7 +5,6 @@ import Form from "../components/Form";
 import Modal from "../components/Modal";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 export default function LocationsPage() {
   const [locations, setLocations] = useState([]);
@@ -28,7 +27,7 @@ export default function LocationsPage() {
   async function fetchLocations() {
     setLoading(true);
     try {
-      const res = await api.get(`${API_BASE_URL}/locations`);
+      const res = await api.get(`/locations`);
       setLocations(res.data);
     } catch (err) {
       console.error("Error fetching locations:", err);
