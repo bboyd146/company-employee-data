@@ -93,7 +93,7 @@ export default function EmployeeProjects() {
             <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="employee-project"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/employee-projects"}
                 fields={[
                   { name: "employee_id", label: "Employee ID", type: "number" },
                   { name: "project_id", label: "Project ID", type: "number" },

@@ -89,7 +89,7 @@ export default function Projects() {
             <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="Project"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/projects"}
                 fields={[
                   { name: "project_name", label: "Project Name", type: "text", required: true },
                   { name: "description", label: "Description", type: "text", required: false },

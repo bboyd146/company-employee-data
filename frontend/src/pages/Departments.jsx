@@ -90,7 +90,7 @@ export default function Departments() {
             <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="Department"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/departments"}
                 fields={[
                   {
                     name: "dep_name",

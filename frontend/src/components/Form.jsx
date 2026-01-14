@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-
+// import api from "api";
+import api from "../utils/api";
 export default function Form({
 entity,
 fields,
@@ -30,9 +30,9 @@ const handleSubmit = async (e) => {
     e.preventDefault();
     try {
     if (initialData?.id) {
-        await axios.put(`${apiUrl}/${initialData.id}`, formData);
+        await api.put(`${apiUrl}/${initialData.id}`, formData);
     } else {
-        await axios.post(apiUrl, formData);
+        await api.post(apiUrl, formData);
     }
     onSuccess();
     } catch (err) {

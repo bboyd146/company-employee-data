@@ -87,7 +87,7 @@ export default function LocationsPage() {
             <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="Location"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/locations"}
                 fields={[
                   { name: "city", label: "City", type: "text", required: true },
                   { name: "state", label: "State", type: "text", required: true },

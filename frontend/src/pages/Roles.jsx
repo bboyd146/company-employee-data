@@ -88,7 +88,7 @@ export default function RolesPage() {
             <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="Role"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/roles"}
                 fields={[
                   { name: "title", label: "Title", type: "text", required: true },
                   { name: "salary", label: "Salary", type: "number", required: true },

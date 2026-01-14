@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
+// import api from "api";
 import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
@@ -56,7 +56,7 @@ export default function Employees() {
       message: "Are you sure you want to delete this employee?",
       confirmAction: async () => {
         try {
-          await axios.delete(`${apiUrl}/${id}`);
+          await api.delete(`${apiUrl}/${id}`);
           fetchEmployees();
           setModal({
             open: true,
@@ -89,7 +89,7 @@ export default function Employees() {
             <div className="max-w-xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <Form
                 entity="Employee"
-                apiUrl={apiUrl}
+                apiUrl={API_BASE_URL + "/employees"}
                 fields={[
                   { name: "first_name", label: "First Name", type: "text", required: true },
                   { name: "last_name", label: "Last Name", type: "text", required: true },
