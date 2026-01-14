@@ -6,7 +6,7 @@ const router = Router();
 // get all departments
 router.get('/', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM department');
+        const [rows] = await db.query('SELECT * FROM department WHERE user_id = ?', [req.user.id]);
         res.json(rows);
     } catch (err) {
         next(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 // get department by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM department WHERE id = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM department WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Department not found' });
         }
@@ -31,8 +31,8 @@ router.post('/', async (req, res, next) => {
     try {
         const { dep_name, location_id } = req.body;
         const [result] = await db.query(
-            'INSERT INTO department (dep_name, location_id) VALUES (?, ?)',
-            [dep_name, location_id]
+            'INSERT INTO department (user_id, dep_name, location_id) VALUES (?, ?, ?)',
+            [req.user.id, dep_name, location_id]
         );
         res.status(201).json({ id: result.insertId, dep_name, location_id });
     } catch (err) {
@@ -45,8 +45,8 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { dep_name, location_id } = req.body;
         const [result] = await db.query(
-            'UPDATE department SET dep_name = ?, location_id = ? WHERE id = ?',
-            [dep_name, location_id, req.params.id]
+            'UPDATE department SET dep_name = ?, location_id = ? WHERE id = ? AND user_id = ?',
+            [dep_name, location_id, req.params.id, req.user.id]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Department not found' });
@@ -60,7 +60,7 @@ router.put('/:id', async (req, res, next) => {
 // delete a department
 router.delete('/:id', async (req, res, next) => {
     try {
-        const [result] = await db.query('DELETE FROM department WHERE id = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM department WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Department not found' });
         }

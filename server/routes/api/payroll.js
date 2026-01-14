@@ -6,7 +6,7 @@ const router = Router();
 // get all payroll records
 router.get('/', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM payroll');
+        const [rows] = await db.query('SELECT * FROM payroll WHERE user_id = ?', [req.user.id]);
         res.json(rows);
     } catch (err) {
         next(err);
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 // get payroll record by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const [rows] = await db.query('SELECT * FROM payroll WHERE id = ?', [req.params.id]);
+        const [rows] = await db.query('SELECT * FROM payroll WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Payroll record not found' });
         }
@@ -31,8 +31,8 @@ router.post('/', async (req, res, next) => {
     try {
         const { employee_id, pay_date, gross_salary, deductions, net_salary, payment_method } = req.body;
         const [result] = await db.query(
-            'INSERT INTO payroll (employee_id, pay_date, gross_salary, deductions, net_salary, payment_method) VALUES (?, ?, ?, ?, ?, ?)',
-            [employee_id, pay_date, gross_salary, deductions, net_salary, payment_method]
+            'INSERT INTO payroll (user_id, employee_id, pay_date, gross_salary, deductions, net_salary, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [req.user.id, employee_id, pay_date, gross_salary, deductions, net_salary, payment_method]
         );
         res.status(201).json({ id: result.insertId, employee_id, pay_date, gross_salary, deductions, net_salary, payment_method });
     } catch (err) {
@@ -45,8 +45,8 @@ router.put('/:id', async (req, res, next) => {
     try {
         const { employee_id, pay_date, gross_salary, deductions, net_salary, payment_method } = req.body;
         const [result] = await db.query(
-            'UPDATE payroll SET employee_id = ?, pay_date = ?, gross_salary = ?, deductions = ?, net_salary = ?, payment_method = ? WHERE id = ?',
-            [employee_id, pay_date, gross_salary, deductions, net_salary, payment_method, req.params.id]
+            'UPDATE payroll SET employee_id = ?, pay_date = ?, gross_salary = ?, deductions = ?, net_salary = ?, payment_method = ? WHERE id = ? AND user_id = ?',
+            [employee_id, pay_date, gross_salary, deductions, net_salary, payment_method, req.params.id, req.user.id]
         );
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Payroll record not found' });
@@ -60,7 +60,7 @@ router.put('/:id', async (req, res, next) => {
 // delete a payroll record
 router.delete('/:id', async (req, res, next) => {
     try {
-        const [result] = await db.query('DELETE FROM payroll WHERE id = ?', [req.params.id]);
+        const [result] = await db.query('DELETE FROM payroll WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
         if (result.affectedRows === 0) {
             return res.status(404).json({ error: 'Payroll record not found' });
         }
