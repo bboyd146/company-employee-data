@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate, Navigate } from "react-router-dom";
-import Login from "../pages/Login";
 import background from "../assets/videos/background.mp4";
 
 export default function LandingPage() {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
 
-    if (token) return <Navigate to="/app" replace />;
+    if (token) return <Navigate to="/dashboard" replace />;
 
   return (
     <div className="font-inter text-slate-900">
@@ -55,16 +53,19 @@ export default function LandingPage() {
 
           <p className="mt-4 text-sm text-slate-300">
             New here?{" "}
-            <Link
-              to={Login}
+            <button
+              onClick={() => navigate("/login")}
               className="text-teal-300 hover:text-teal-200 underline underline-offset-2"
             >
               Try a demo login
-            </Link>{" "}
+            </button>{" "}
             or{" "}
-            <Link to="/signup" className="text-teal-300 hover:text-teal-200 underline underline-offset-2">
+            <button
+              onClick={() => navigate("/register")}
+              className="text-teal-300 hover:text-teal-200 underline underline-offset-2"
+            >
               create an account
-            </Link>.
+            </button>.
           </p>
         </div>
       </header>
