@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
 import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
@@ -11,6 +10,8 @@ export default function LocationsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingLocation, setEditingLocation] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
   // Modal state
   const [modal, setModal] = useState({
@@ -53,7 +54,7 @@ export default function LocationsPage() {
       message: "Are you sure you want to delete this location?",
       confirmAction: async () => {
         try {
-          await axios.delete(`${apiUrl}/${id}`);
+          await api.delete(`${API_BASE_URL}/locations/${id}`);
           fetchLocations();
           setModal({
             open: true,

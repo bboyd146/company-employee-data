@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import api from "api";
 import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
@@ -13,6 +12,7 @@ export default function Employees() {
   const [showForm, setShowForm] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "";
   // Modal state
   const [modal, setModal] = useState({
     open: false,

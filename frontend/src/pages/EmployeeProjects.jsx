@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
 import api from "../utils/api";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
@@ -12,6 +11,8 @@ export default function EmployeeProjects() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingEmployeeProject, setEditingEmployeeProject] = useState(null);
+
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
   // Modal state
   const [modal, setModal] = useState({
@@ -55,7 +56,7 @@ export default function EmployeeProjects() {
       message: "Are you sure you want to delete this employee project assignment?",
       confirmAction: async () => {
         try {
-          await axios.delete(`${apiUrl}/${id}`);
+          await api.delete(`${API_BASE_URL}/employee-projects/${id}`);
           fetchEmployeeProjects();
           setModal({
             open: true,

@@ -22,7 +22,7 @@ export default function Register() {
     try {
       const res = await api.post("/auth/register", { email, password });
       localStorage.setItem("token", res.data.token);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.error || "Registration failed");
     } finally {

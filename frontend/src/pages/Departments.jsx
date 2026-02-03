@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
 import api from "../utils/api";
 import { Plus, Edit2, Trash2 } from "lucide-react";
 import Form from "../components/Form";
 import Modal from "../components/Modal";
-
 
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingDepartment, setEditingDepartment] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
   // Modal state
   const [modal, setModal] = useState({
@@ -54,7 +54,7 @@ export default function Departments() {
       message: "Are you sure you want to delete this department?",
       confirmAction: async () => {
         try {
-          await axios.delete(`${apiUrl}/${id}`);
+          await api.delete(`${API_BASE_URL}/departments/${id}`);
           fetchDepartments();
           setModal({
             open: true,
