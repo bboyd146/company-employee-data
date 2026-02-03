@@ -14,12 +14,15 @@ export default function LandingPage() {
       <header className="relative min-h-[72vh] flex items-center justify-center overflow-hidden">
         {/* Background video */}
         <video
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover pointer-events-none"
           src={background}
           autoPlay
           loop
           muted
           playsInline
+          preload="auto"
+          controls={false}
+          disablePictureInPicture
         />
 
         {/* Hue / color overlay */}
